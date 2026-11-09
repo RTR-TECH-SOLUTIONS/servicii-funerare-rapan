@@ -2,15 +2,18 @@
 import Layout from '../layouts/Layout.astro';
 import PageHeader from '../components/PageHeader.astro';
 import PacheteCards from '../components/PacheteCards.astro';
+import PachetContinut from '../components/PachetContinut.astro';
 import Extras from '../components/Extras.astro';
 import Faq from '../components/Faq.astro';
-import { faqMoney, photos, u } from '../data/site';
+import { faqMoney, lei, packages, photos, site, u } from '../data/site';
+
+const [p1, p2, p3] = packages.map((p) => lei(p.price));
 ---
 
 <Layout
   active="pachete"
-  title="Pachete servicii funerare de la 3.500 lei, Bascov și Pitești | Răpan"
-  description="Pachet Basic 3.500 lei, Standard 4.500 lei, Premium 6.250 lei, cu sicriu, toaletizare și transport autorizat DSP. Toate intră în ajutorul de deces de 9.192 lei."
+  title={`Pachete servicii funerare de la ${p1}, Bascov și Pitești | Răpan`}
+  description={`Pachete funerare complete: ${p1}, ${p2} și ${p3}, cu sicriu, cruce, colive, prosoape, toaletizare, îmbălsămare, capac frigorific și transport gratuit. Intră în ajutorul de deces de ${lei(site.ajutor.asigurat)}.`}
 >
   <PageHeader
     crumb="Pachete"
@@ -19,7 +22,7 @@ import { faqMoney, photos, u } from '../data/site';
     photo={photos.duba}
     photoPos="center 68%"
   >
-    <a slot="actions" href={u('/ce-faceti-la-deces/')} class="btn btn-ghost-dark btn-lg max-sm:w-full">Ce acte trebuie</a>
+    <a slot="actions" href="#ce-contine" class="btn btn-ghost-dark btn-lg max-sm:w-full">Ce conține pachetul</a>
   </PageHeader>
 
   <section class="section">
@@ -28,7 +31,9 @@ import { faqMoney, photos, u } from '../data/site';
     </div>
   </section>
 
-  <section class="section pt-0">
+  <PachetContinut />
+
+  <section class="section">
     <div class="wrap">
       <Extras />
     </div>

@@ -108,7 +108,7 @@ export const services: Service[] = [
       'În magazinul din Valea Ursului găsiți sicrie din lemn, echipate cu mânere, lenjerie și pernă, plus tot ce trebuie pentru înmormântare.',
       'Le puteți vedea pe loc, zi sau noapte, sau vă trimitem poze pe WhatsApp.',
     ],
-    points: ['Sicrie de la 1.000 lei', 'Cruci, coroane și jerbe', 'Lumânări, prosoape, batiste, doliu'],
+    points: ['Sicrie de mai multe modele, la alegere', 'Cruci, coroane și jerbe', 'Lumânări, prosoape, batiste, doliu'],
     // Poza cu sicriul (wa-09) a fost scoasă la cererea lui Mario; magazinul arată crucile și coroanele.
     photo: photos.magazinZi,
     extra: photos.magazin,
@@ -136,45 +136,63 @@ export const services: Service[] = [
   },
 ];
 
-// Pachetele de pe site-ul vechi (Wayback Machine, 28.02.2025).
-// TODO(real): de confirmat cu dl. Răpan prețurile și conținutul pentru 2026.
+// Conținutul pachetului, exact în ordinea trimisă de dl. Răpan pe WhatsApp (9 nov 2026, „Pachet 5500”),
+// cu cele două completări ale lui: „articole funerare” sub cruce și „3 colive, platou mare” sub prosopele.
+export const packageContents: { qty?: string; label: string }[] = [
+  { label: 'Sicriu' },
+  { label: 'Cruce de lemn' },
+  { label: 'Articole funerare' },
+  { qty: '3', label: 'capete' },
+  { qty: '6', label: 'prescuri' },
+  { qty: '10', label: 'prosoape medii' },
+  { qty: '4', label: 'prosoape pentru preot' },
+  { qty: '24', label: 'pachete reci, a câte 12 produse' },
+  { qty: '44', label: 'covrigi' },
+  { qty: '44', label: 'prosopele cu lumânare și moneda de 0,5 lei' },
+  { qty: '3', label: 'colive, platou mare' },
+  { label: 'Vin și ulei' },
+  { label: 'Transport gratuit' },
+  { label: 'Toaletizare și îmbălsămare' },
+  { label: 'Capac frigorific' },
+  { label: 'Consultanță gratuită' },
+];
+
+export const packageNote = 'Pachetul se poate modifica în funcție de sicriul ales.';
+
+// Prețurile trimise de client: „primul 50 mil, al 2 55 mil și al treilea 60 mil” = 5.000 / 5.500 / 6.000 lei.
+// Conținutul l-a trimis doar pentru pachetul de 5.500 (sicriu de 1.600 lei).
+// TODO(real): de confirmat cu dl. Răpan că diferența dintre pachete e doar sicriul (și ce sicriu are fiecare).
 export const packages = [
   {
     id: 'basic',
     name: 'Basic',
-    price: 3500,
-    note: 'Ce e strict necesar, fără masă de pomană.',
-    items: [
-      'Sicriu de 1.000 lei, cu mânere, lenjerie și pernă',
-      'Toaletizarea decedatului',
-      'Transport cu mașina autorizată DSP, gratuit în Bascov și Pitești',
-    ],
+    price: 5000,
+    coffin: 'Sicriu mai simplu, la alegere',
+    note: 'Pachetul complet, cu un sicriu mai simplu.',
   },
   {
     id: 'standard',
     name: 'Standard',
-    price: 4500,
-    note: 'Cu pachetele pentru parastas incluse.',
-    items: [
-      'Sicriu de 1.200 lei, cu mânere, lenjerie și pernă',
-      'Toaletizarea decedatului',
-      'Pachete pentru parastas',
-      'Transport cu mașina autorizată DSP, gratuit în Bascov și Pitești',
-    ],
+    price: 5500,
+    coffin: 'Sicriu de 1.600 lei',
+    note: 'Pachetul complet, cu sicriu de 1.600 lei.',
   },
   {
     id: 'premium',
     name: 'Premium',
-    price: 6250,
-    note: 'Cu masa de pomană gătită de noi.',
-    items: [
-      'Sicriu de 1.600 lei, cu mânere, lenjerie și pernă',
-      'Toaletizarea decedatului',
-      'Pachete pentru parastas',
-      '30 de meniuri, cu 2 feluri la alegere',
-      'Transport cu mașina autorizată DSP, gratuit în Bascov și Pitești',
-    ],
+    price: 6000,
+    coffin: 'Sicriu mai deosebit, la alegere',
+    note: 'Pachetul complet, cu un sicriu mai deosebit.',
   },
+];
+
+// Ce apare pe fiecare card, sub sicriu (rezumat din lista de mai sus).
+export const packageHighlights = [
+  'Cruce de lemn și articole funerare',
+  'Capete, prescuri, colive, covrigi și pachete reci',
+  'Prosoape, prosopele cu lumânare, vin și ulei',
+  'Toaletizare, îmbălsămare și capac frigorific',
+  'Transport gratuit și consultanță gratuită',
 ];
 
 // „Mai avem în magazin” (înlocuiește chip-urile). TODO(real): lista exactă de la client.
@@ -278,7 +296,7 @@ export const faqMoney: Qa[] = [
   },
   {
     q: 'Pot schimba ceva într-un pachet?',
-    a: 'Da. Puteți alege alt sicriu, adăuga coroane sau masa de pomană. Vă spunem prețul pe loc, înainte să hotărâți.',
+    a: 'Da. Pachetul se poate modifica în funcție de sicriul ales. Puteți adăuga și coroane sau masa de pomană. Vă spunem prețul pe loc, înainte să hotărâți.',
   },
 ];
 

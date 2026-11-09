@@ -1,0 +1,50 @@
+---
+import { lei, packageContents, packageNote, packages, site } from '../data/site';
+import Icon from './Icon.astro';
+
+const standard = packages.find((p) => p.id === 'standard')!;
+---
+
+<!--
+  „Grafica” cerută de dl. Răpan: conținutul pachetului în ordinea trimisă de el, numerotat,
+  cu cantitățile scoase în auriu. Lista curge pe coloane (sus-jos), ca ordinea să rămână cea din mesaj.
+-->
+<section id="ce-contine" class="scroll-mt-32 px-3">
+  <div class="panel bg-ink-900 text-on-dark">
+    <div class="wrap py-16 lg:py-20">
+      <div class="reveal grid gap-6 lg:grid-cols-[1fr_auto] lg:items-end">
+        <div>
+          <h2 class="text-white">Ce conține pachetul</h2>
+          <p class="lead mt-4 max-w-[620px]">
+            Lista de mai jos este pachetul de {lei(standard.price)}, cu sicriu de 1.600 lei. {packageNote}
+          </p>
+        </div>
+        <a href={site.phoneHref} class="btn btn-gold btn-lg max-sm:w-full">
+          <Icon name="phone" size={20} />
+          {site.phone}
+        </a>
+      </div>
+
+      <ol class="reveal mt-10 gap-x-10 md:columns-2">
+        {
+          packageContents.map((it, i) => (
+            <li class="flex break-inside-avoid items-center gap-4 border-b border-white/10 py-3.5">
+              <span class="w-7 shrink-0 text-right text-[13px] text-on-dark-muted tabular-nums">{i + 1}.</span>
+              <span class="grid h-12 w-14 shrink-0 place-items-center rounded-2xl bg-white/[0.06]">
+                {it.qty ? (
+                  <span class="font-serif text-[28px] leading-none font-semibold text-gold-lt">{it.qty}</span>
+                ) : (
+                  <Icon name="check" size={20} class="text-gold-lt" />
+                )}
+              </span>
+              <span class={`text-[17px] ${i === 0 ? 'font-semibold text-white' : 'text-on-dark'}`}>
+                {it.label}
+                {i === 0 && <span class="ml-2 rounded-full bg-gold/20 px-2.5 py-0.5 text-[13px] text-gold-lt">1.600 lei</span>}
+              </span>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </div>
+</section>

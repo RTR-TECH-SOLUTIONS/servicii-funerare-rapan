@@ -59,8 +59,14 @@ CUI 47183478, F03/764/2022), dricul AG 11 RPN, nota Google 4,9 din 49, recenziil
 în comună (de pe flyer), serviciile (flyer + Facebook), **pachetele Basic 3.500 / Standard 4.500 / Premium 6.250 lei**
 (de pe site-ul vechi, Wayback 02.2025), ajutorul de deces 2026 (9.192 / 4.596 lei).
 
+**Pachete (de la client, WhatsApp 9 nov 2026):** prețurile 5.000 / 5.500 / 6.000 lei („50 mil, 55 mil, 60 mil”) și
+conținutul pachetului de 5.500 (sicriu 1.600, cruce lemn, articole funerare, 3 capete, 6 prescuri, 10 prosoape medii,
+4 prosoape preot, 24 pachete reci a 12 produse, 44 covrigi, 44 prosopele cu lumânare și moneda de 0,5, 3 colive platou
+mare, vin și ulei, transport gratuit, toaletizare și îmbălsămare, capac frigorific, consultanță gratuită), afișat în
+ordinea lui în `PachetContinut.astro`. „Pachetul se poate modifica în funcție de sicriul ales.”
+
 **Provizoriu, de confirmat cu clientul** (totul în `src/data/site.ts`):
-- prețurile și conținutul pachetelor pentru 2026 (pe Facebook apare și „prețuri de la 700 lei”);
+- ce diferă la pachetele de 5.000 și 6.000 (acum: același conținut, „sicriu mai simplu / mai deosebit”);
 - „transport gratuit în Bascov și Pitești” (site-ul vechi spunea Pitești, flyerul spune „în comună”);
 - plata din ajutorul de deces, fără avans (FAQ);
 - timpii de sosire din secțiunea Zone;
