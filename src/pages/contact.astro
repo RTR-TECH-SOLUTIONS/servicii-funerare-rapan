@@ -1,0 +1,35 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import Contact from '../components/Contact.astro';
+import Zone from '../components/Zone.astro';
+import { photos, waLink } from '../data/site';
+---
+
+<Layout
+  active="contact"
+  title="Contact Servicii Funerare Răpan, Valea Ursului nr. 203, Bascov | 0751 692 692"
+  description="Servicii Funerare Răpan, Valea Ursului nr. 203, com. Bascov, jud. Argeș. Telefon și WhatsApp non-stop: 0751 692 692. CUI 47183478, autorizat DSP Argeș."
+>
+  <PageHeader
+    crumb="Contact"
+    title="Contact, non-stop"
+    lead="Ne găsiți la telefon și pe WhatsApp la orice oră. Magazinul e pe drumul principal din Valea Ursului, comuna Bascov."
+    photo={photos.magazinZi}
+  >
+    <a slot="actions" href={waLink()} target="_blank" rel="noopener" class="btn btn-ghost-dark btn-lg max-sm:w-full">Scrieți pe WhatsApp</a>
+  </PageHeader>
+
+  <section class="section">
+    <div class="wrap">
+      <Contact />
+    </div>
+  </section>
+
+  <section class="section pt-0">
+    <div class="wrap">
+      <h2 class="reveal mb-8">Unde ajungem și în cât timp</h2>
+      <Zone />
+    </div>
+  </section>
+</Layout>

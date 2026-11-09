@@ -1,0 +1,50 @@
+---
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { u, type PageKey } from '../data/site';
+
+interface Props {
+  title: string;
+  description: string;
+  active: PageKey;
+}
+
+const { title, description, active } = Astro.props;
+---
+
+<!doctype html>
+<html lang="ro">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#14110e" />
+    <!-- demo de prezentare: nu se indexează. TODO(real): se scoate la proiectul real + schema FuneralHome, sitemap. -->
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="icon" href={u('/favicon.svg')} type="image/svg+xml" />
+    <title>{title}</title>
+    <script is:inline>document.documentElement.classList.add('js');</script>
+  </head>
+  <body>
+    <Header active={active} />
+    <main>
+      <slot />
+    </main>
+    <Footer />
+    <script>
+      // Apariție discretă la scroll (dezactivată la prefers-reduced-motion din CSS).
+      const io = new IntersectionObserver(
+        (entries) =>
+          entries.forEach((e) => {
+            if (e.isIntersecting) {
+              e.target.classList.add('in');
+              io.unobserve(e.target);
+            }
+          }),
+        { rootMargin: '0px 0px -8% 0px' },
+      );
+      document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+    </script>
+  </body>
+</html>

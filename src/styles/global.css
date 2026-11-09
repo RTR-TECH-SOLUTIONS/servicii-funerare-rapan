@@ -1,0 +1,298 @@
+@import 'tailwindcss';
+@import '@fontsource-variable/albert-sans';
+@import '@fontsource/cormorant-garamond/latin-500.css';
+@import '@fontsource/cormorant-garamond/latin-ext-500.css';
+@import '@fontsource/cormorant-garamond/latin-600.css';
+@import '@fontsource/cormorant-garamond/latin-ext-600.css';
+@import '@fontsource/cormorant-garamond/latin-500-italic.css';
+@import '@fontsource/cormorant-garamond/latin-ext-500-italic.css';
+
+/*
+  Sistemul de design e cel măsurat pe beelsamen.ro (9 noiembrie 2026, vezi _research/national/REPORT.md):
+  Cormorant Garamond 600 pe titluri + Albert Sans 17/28 pe text, auriu #cfa544 cu gradient pe butoane,
+  butoane cu radius 8 px (48 px în header, 54 px în hero), secțiuni ivory/linen cu padding 92 px, container 1200.
+  Abatere voită: mov-ul lor (plum #2a1a27) e înlocuit cu negrul cald din flyerul și logo-ul Răpan.
+  Restul combinației: hero pe toată lățimea (Memoris), italicul din titlu și zonele cu timp de sosire (Ultimul Drum),
+  „ce vă rămâne din ajutorul de deces” (Memorium / Beligi), „plata la final, fără avans” (Eden Heaven).
+*/
+@theme {
+  --color-ink-950: #0d0b09;
+  --color-ink-900: #14110e;
+  --color-ink-800: #1c1814;
+  --color-ink-700: #2a241e;
+
+  --color-gold: #cfa544;
+  --color-gold-lt: #ead08f;
+  --color-gold-dk: #7c6122;
+  --color-gold-line: #e3cf9b;
+
+  --color-ivory: #fcf9f3;
+  --color-linen: #f3ecdf;
+  --color-line: #e2d8c5;
+
+  --color-heading: #1d1915;
+  --color-body: #3a332c;
+  --color-muted: #6a6057;
+  --color-on-dark: #ddd4c8;
+  --color-on-dark-muted: #a99f93;
+  --color-wa: #1f7a4d;
+
+  --font-serif: 'Cormorant Garamond', 'Times New Roman', serif;
+  --font-sans: 'Albert Sans Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  /* V2: Mario + clientul au cerut „mai rotund, mai modern” (8 px de la Beelsamen a fost „prea pătrățos”). */
+  --radius-card: 24px;
+  --radius-panel: 32px;
+  --radius-img: 20px;
+  --radius-field: 14px;
+}
+
+:root {
+  --topbar-h: 44px;
+  --header-h: 79px;
+  --wrap: 1200px;
+  --gut: clamp(16px, 4vw, 40px);
+  --gold-grad: linear-gradient(100deg, #c1962f 0%, #dcb85a 22%, #efd893 50%, #dcb85a 78%, #c1962f 100%);
+  --section-y: clamp(64px, 8vw, 92px);
+  color-scheme: light;
+}
+
+@media (max-width: 1023px) {
+  :root {
+    --topbar-h: 0px;
+    --header-h: 66px;
+  }
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: calc(var(--header-h) + 16px);
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background: var(--color-ivory);
+    color: var(--color-body);
+    font-family: var(--font-sans);
+    font-size: 17px;
+    line-height: 28px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  @media (max-width: 1023px) {
+    body {
+      font-size: 16px;
+      line-height: 26px;
+    }
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    color: var(--color-heading);
+    text-wrap: balance;
+  }
+
+  h1 {
+    font-size: clamp(2.6rem, 1.55rem + 3.6vw, 4.3rem);
+    line-height: 1.08;
+    letter-spacing: -0.005em;
+  }
+
+  h2 {
+    font-size: clamp(2.15rem, 1.6rem + 1.9vw, 3.1rem);
+    line-height: 1.08;
+  }
+
+  h3 {
+    font-size: clamp(1.55rem, 1.3rem + 0.8vw, 2rem);
+    line-height: 1.15;
+  }
+
+  a {
+    color: inherit;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-gold);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+@layer components {
+  .wrap {
+    width: 100%;
+    max-width: calc(var(--wrap) + 2 * var(--gut));
+    margin-inline: auto;
+    padding-inline: var(--gut);
+  }
+
+  .section {
+    padding-block: var(--section-y);
+  }
+
+  .lead {
+    font-size: clamp(1.05rem, 0.98rem + 0.3vw, 1.18rem);
+    line-height: 1.6;
+  }
+
+  /* Butonul auriu Beelsamen (gradient, chenar #B98E30, text închis 700), dar complet rotunjit în V2 */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    min-height: 50px;
+    padding: 12px 26px;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 1.2;
+    text-decoration: none;
+    white-space: nowrap;
+    transition:
+      filter 180ms ease-out,
+      background-color 180ms ease-out,
+      border-color 180ms ease-out,
+      color 180ms ease-out;
+  }
+
+  .btn-lg {
+    min-height: 58px;
+    padding: 14px 32px;
+    font-size: 17px;
+  }
+
+  .btn:active {
+    transform: translateY(1px);
+  }
+
+  .btn-gold {
+    background: linear-gradient(#e3c36a, #c79a38);
+    border: 1px solid #b98e30;
+    color: #231a10;
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.4);
+  }
+
+  .btn-gold:hover {
+    filter: brightness(1.06);
+  }
+
+  .btn-ghost-dark {
+    border: 1px solid rgb(255 255 255 / 0.5);
+    color: #fff;
+  }
+
+  .btn-ghost-dark:hover {
+    border-color: var(--color-gold-lt);
+    color: var(--color-gold-lt);
+  }
+
+  .btn-ink {
+    background: var(--color-ink-900);
+    border: 1px solid var(--color-ink-900);
+    color: #fff;
+  }
+
+  .btn-ink:hover {
+    background: var(--color-ink-700);
+  }
+
+  .btn-line {
+    border: 1px solid var(--color-gold-line);
+    background: #fff;
+    color: var(--color-heading);
+  }
+
+  .btn-line:hover {
+    border-color: var(--color-gold);
+  }
+
+  .card {
+    background: #fff;
+    border: 1px solid #eadfc6;
+    border-radius: var(--radius-card);
+    box-shadow:
+      0 1px 2px rgb(40 30 10 / 0.04),
+      0 12px 32px -16px rgb(40 30 10 / 0.14);
+  }
+
+  /* Panou rotunjit (bento) pentru secțiunile închise / evidențiate */
+  .panel {
+    border-radius: var(--radius-panel);
+    overflow: hidden;
+  }
+
+  .ph {
+    border-radius: var(--radius-img);
+  }
+
+  .field {
+    height: 52px;
+    width: 100%;
+    border-radius: var(--radius-field);
+    border: 1px solid var(--color-line);
+    background: #fff;
+    padding-inline: 16px;
+    font-weight: 400;
+    color: var(--color-body);
+    transition: border-color 160ms ease-out, box-shadow 160ms ease-out;
+  }
+
+  .field:focus {
+    outline: none;
+    border-color: var(--color-gold);
+    box-shadow: 0 0 0 4px rgb(207 165 68 / 0.18);
+  }
+
+  .reveal {
+    transition:
+      opacity 500ms ease-out,
+      transform 500ms ease-out;
+  }
+
+  .js .reveal:not(.in) {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+
+  .link-gold {
+    color: var(--color-gold-dk);
+    text-decoration: underline;
+    text-decoration-color: var(--color-gold);
+    text-underline-offset: 4px;
+    text-decoration-thickness: 1px;
+  }
+
+  .link-gold:hover {
+    color: var(--color-heading);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    transition-duration: 1ms !important;
+    animation-duration: 1ms !important;
+  }
+
+  .js .reveal:not(.in) {
+    opacity: 1;
+    transform: none;
+  }
+}

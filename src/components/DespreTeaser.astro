@@ -1,0 +1,63 @@
+---
+import { Image } from 'astro:assets';
+import { photos, site, u } from '../data/site';
+import Icon from './Icon.astro';
+---
+
+<!-- „Mașini proprii și un sediu” (Beelsamen) ca panou închis rotunjit, cu pozele clientului în mozaic. -->
+<section class="px-3">
+  <div class="panel bg-ink-900 text-on-dark">
+    <div class="wrap grid gap-12 py-16 lg:grid-cols-[0.85fr_1.15fr] lg:items-center lg:gap-14 lg:py-20">
+      <div class="reveal">
+        <h2 class="text-white">O firmă de familie, cu mașinile și magazinul ei</h2>
+        <div class="mt-6 space-y-4">
+          <p>
+            Lucrăm din Valea Ursului, comuna Bascov. Când sunați, vă răspunde domnul Neluțu Răpan, iar la înmormântare vin
+            aceiași oameni cu care ați vorbit la telefon.
+          </p>
+          <p>Avem mașină mortuară autorizată de DSP Argeș, o dubă pentru transport și un magazin cu tot ce trebuie.</p>
+        </div>
+        <dl class="mt-8 grid grid-cols-2 gap-3">
+          <div class="rounded-[20px] bg-white/5 p-5">
+            <dt class="text-[14px] text-on-dark-muted">Recenzii pe Google</dt>
+            <dd class="mt-1 font-serif text-[30px] leading-none font-semibold whitespace-nowrap text-gold-lt sm:text-[36px]">{site.google.rating} din 5</dd>
+            <dd class="mt-1 text-[14px] text-on-dark-muted">{site.google.count} de recenzii</dd>
+          </div>
+          <div class="rounded-[20px] bg-white/5 p-5">
+            <dt class="text-[14px] text-on-dark-muted">Program</dt>
+            <dd class="mt-1 font-serif text-[30px] leading-none font-semibold whitespace-nowrap text-gold-lt sm:text-[36px]">Non-stop</dd>
+            <dd class="mt-1 text-[14px] text-on-dark-muted">inclusiv de sărbători</dd>
+          </div>
+        </dl>
+        <a href={u('/despre-noi/')} class="btn btn-ghost-dark mt-8">
+          Mai multe despre noi
+          <Icon name="plus" size={16} />
+        </a>
+      </div>
+
+      <div class="reveal grid grid-cols-2 grid-rows-[200px_200px] gap-3 sm:grid-rows-[240px_240px]">
+        <Image
+          src={photos.magazin.img}
+          alt={photos.magazin.alt}
+          widths={[500, 800]}
+          sizes="(min-width: 1024px) 340px, 50vw"
+          class="ph row-span-2 h-full w-full object-cover"
+        />
+        <Image
+          src={photos.dricBiserica.img}
+          alt={photos.dricBiserica.alt}
+          widths={[400, 700]}
+          sizes="(min-width: 1024px) 340px, 50vw"
+          class="ph h-full w-full object-cover"
+        />
+        <Image
+          src={photos.duba.img}
+          alt={photos.duba.alt}
+          widths={[400, 700]}
+          sizes="(min-width: 1024px) 340px, 50vw"
+          class="ph h-full w-full object-cover object-[center_65%]"
+        />
+      </div>
+    </div>
+  </div>
+</section>

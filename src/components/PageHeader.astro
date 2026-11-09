@@ -1,0 +1,47 @@
+---
+import { Image } from 'astro:assets';
+import { site, u, type Photo } from '../data/site';
+import Icon from './Icon.astro';
+
+interface Props {
+  crumb: string;
+  title: string;
+  lead: string;
+  photo: Photo;
+  photoPos?: string;
+}
+const { crumb, title, lead, photo, photoPos = 'center' } = Astro.props;
+---
+
+<!-- Antetul paginilor interioare: panou închis rotunjit, text în stânga, poza clientului în dreapta. -->
+<section class="px-3 pt-3">
+  <div class="panel relative bg-ink-900 text-on-dark">
+    <div class="wrap grid items-center gap-8 py-12 lg:grid-cols-[1.05fr_0.95fr] lg:gap-14 lg:py-16">
+      <div>
+        <nav aria-label="Breadcrumb" class="text-[14px] text-on-dark-muted">
+          <a href={u('/')} class="hover:text-gold-lt">Acasă</a>
+          <span class="mx-2 text-gold" aria-hidden="true">·</span>
+          <span aria-current="page" class="text-gold-lt">{crumb}</span>
+        </nav>
+        <h1 class="mt-4 text-white">{title}</h1>
+        <p class="lead mt-5 max-w-[560px]">{lead}</p>
+        <div class="mt-8 flex flex-wrap gap-3">
+          <a href={site.phoneHref} class="btn btn-gold btn-lg max-sm:w-full">
+            <Icon name="phone" size={20} />
+            Sunați: {site.phone}
+          </a>
+          <slot name="actions" />
+        </div>
+      </div>
+      <Image
+        src={photo.img}
+        alt={photo.alt}
+        widths={[600, 900, 1200]}
+        sizes="(min-width: 1024px) 560px, 100vw"
+        loading="eager"
+        class="ph aspect-[4/3] w-full object-cover lg:aspect-[5/4]"
+        style={`object-position:${photoPos}`}
+      />
+    </div>
+  </div>
+</section>

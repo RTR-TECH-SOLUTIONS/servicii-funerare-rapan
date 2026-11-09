@@ -1,0 +1,66 @@
+---
+import { occasions, site } from '../data/site';
+import Icon from './Icon.astro';
+---
+
+<!-- Mini-comandă pentru pomană / parastas: se compune un mesaj și se deschide WhatsApp. -->
+<form class="card grid gap-4 p-6 sm:grid-cols-2 sm:p-8" novalidate data-wa={site.whatsapp} data-pomana>
+  <div class="sm:col-span-2">
+    <h3 class="text-[30px]">Cereți un meniu</h3>
+    <p class="mt-1 text-[15px] text-muted">Vă răspundem cu meniul și prețul pe porție.</p>
+  </div>
+  <label class="grid gap-1.5 text-[15px] font-semibold text-heading">
+    Ocazia
+    <select name="ocazie" class="field">
+      {occasions.map((o) => <option>{o}</option>)}
+    </select>
+  </label>
+  <label class="grid gap-1.5 text-[15px] font-semibold text-heading">
+    Data
+    <input type="date" name="data" required class="field" />
+  </label>
+  <label class="grid gap-1.5 text-[15px] font-semibold text-heading">
+    Număr de porții
+    <input type="number" name="portii" min="5" step="5" value="30" required inputmode="numeric" class="field" />
+  </label>
+  <fieldset class="grid gap-1.5">
+    <legend class="mb-1.5 text-[15px] font-semibold text-heading">Meniu</legend>
+    <div class="grid h-[52px] grid-cols-2 rounded-full border border-line bg-white p-1">
+      <label class="grid cursor-pointer place-items-center rounded-full text-[15px] has-[:checked]:bg-ink-900 has-[:checked]:text-white has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-gold">
+        <input type="radio" name="meniu" value="de post" checked class="sr-only" />de post
+      </label>
+      <label class="grid cursor-pointer place-items-center rounded-full text-[15px] has-[:checked]:bg-ink-900 has-[:checked]:text-white has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-gold">
+        <input type="radio" name="meniu" value="de dulce" class="sr-only" />de dulce
+      </label>
+    </div>
+  </fieldset>
+  <p class="hidden text-[15px] text-[#9b2c1d] sm:col-span-2" role="alert" data-err>Alegeți data mesei.</p>
+  <button type="submit" class="btn btn-gold btn-lg sm:col-span-2">
+    <Icon name="whatsapp" size={20} />
+    Trimiteți pe WhatsApp
+  </button>
+  <p class="text-[14px] text-muted sm:col-span-2">
+    Sau sunați la <a href={site.phoneHref} class="link-gold">{site.phone}</a>, la orice oră.
+  </p>
+</form>
+
+<script>
+  document.querySelectorAll<HTMLFormElement>('form[data-pomana]').forEach((form) => {
+    const err = form.querySelector('[data-err]');
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const d = new FormData(form);
+      const data = String(d.get('data') || '');
+      if (!data) {
+        err?.classList.remove('hidden');
+        form.querySelector<HTMLInputElement>('[name=data]')?.focus();
+        return;
+      }
+      err?.classList.add('hidden');
+      const zi = new Date(data).toLocaleDateString('ro-RO', { day: 'numeric', month: 'long', year: 'numeric' });
+      const text = `Bună ziua, aș vrea un meniu ${d.get('meniu')} pentru ${String(d.get('ocazie')).toLowerCase()}, pe ${zi}, ${d.get('portii')} de porții.`;
+      // TODO(real): la proiectul real, cererea poate merge și pe e-mail (Resend).
+      window.open(`https://wa.me/${form.dataset.wa}?text=${encodeURIComponent(text)}`, '_blank', 'noopener');
+    });
+  });
+</script>

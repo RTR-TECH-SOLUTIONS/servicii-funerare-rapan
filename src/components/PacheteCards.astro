@@ -1,0 +1,106 @@
+---
+import { lei, packages, site, u, waLink } from '../data/site';
+import Icon from './Icon.astro';
+
+interface Props {
+  /** pe pagina principală: fără link spre detalii în fiecare card, plus link „toate detaliile” */
+  compact?: boolean;
+}
+const { compact = false } = Astro.props;
+const { asigurat, familie } = site.ajutor;
+---
+
+<!--
+  Cardurile de pachet Beelsamen (preț mare serif) + „ce vă rămâne din ajutorul de deces” (Memorium / Beligi),
+  calculat pe loc. V2: carduri rotunjite 28 px, Premium pe negru ca să rupă simetria.
+-->
+<div data-pachete>
+  <div class="reveal flex flex-wrap items-center gap-3" role="radiogroup" aria-label="Decedatul era">
+    <span class="text-[16px] font-semibold text-heading">Decedatul era:</span>
+    <div class="grid w-full gap-1 rounded-[22px] border border-line bg-white p-1 sm:inline-flex sm:w-auto sm:rounded-full">
+      <label class="cursor-pointer rounded-full px-4 py-2.5 text-center text-[15px] transition-colors has-[:checked]:bg-ink-900 has-[:checked]:text-white has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-gold">
+        <input type="radio" name="ajutor" value={asigurat} checked class="sr-only" />
+        pensionar sau asigurat <span class="opacity-70">· {lei(asigurat)}</span>
+      </label>
+      <label class="cursor-pointer rounded-full px-4 py-2.5 text-center text-[15px] transition-colors has-[:checked]:bg-ink-900 has-[:checked]:text-white has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-gold">
+        <input type="radio" name="ajutor" value={familie} class="sr-only" />
+        membru de familie <span class="opacity-70">· {lei(familie)}</span>
+      </label>
+    </div>
+  </div>
+
+  <ul class="mt-8 grid gap-5 lg:grid-cols-3">
+    {
+      packages.map((p) => {
+        const dark = p.id === 'premium';
+        return (
+          <li
+            class={`reveal flex flex-col rounded-[28px] p-7 sm:p-8 ${dark ? 'bg-ink-900 text-on-dark' : 'card'}`}
+            data-price={p.price}
+          >
+            <h3 class={`text-[30px] ${dark ? 'text-white' : ''}`}>Pachet {p.name}</h3>
+            <p class={`mt-1 text-[15px] ${dark ? 'text-on-dark-muted' : 'text-muted'}`}>{p.note}</p>
+            <p class={`mt-6 font-serif text-[56px] leading-none font-semibold ${dark ? 'text-gold-lt' : 'text-heading'}`}>{lei(p.price)}</p>
+            <p
+              class={`mt-5 rounded-2xl px-4 py-3 text-[15px] leading-snug ${dark ? 'bg-white/8 text-on-dark' : 'bg-[#f6efdf] text-[#4a3a17]'}`}
+              data-rest
+              aria-live="polite"
+            >
+              Din ajutorul de deces vă rămân <strong>{lei(asigurat - p.price)}</strong>
+            </p>
+            <ul class="mt-6 flex-1 space-y-3 text-[16px]">
+              {(compact ? p.items.slice(0, 3) : p.items).map((it) => (
+                <li class="flex gap-3">
+                  <span class={`mt-0.5 grid size-6 shrink-0 place-items-center rounded-full ${dark ? 'bg-gold/25 text-gold-lt' : 'bg-[#f3e6c4] text-gold-dk'}`}>
+                    <Icon name="check" size={14} />
+                  </span>
+                  <span>{it}</span>
+                </li>
+              ))}
+              {compact && p.items.length > 3 && (
+                <li class={`pl-9 text-[15px] ${dark ? 'text-on-dark-muted' : 'text-muted'}`}>și încă {p.items.length - 3}</li>
+              )}
+            </ul>
+            <a
+              href={waLink(`Bună ziua, mă interesează Pachetul ${p.name} (${lei(p.price)}). `)}
+              target="_blank"
+              rel="noopener"
+              class={`btn mt-7 w-full ${dark ? 'btn-gold' : 'btn-ink'}`}
+            >
+              Întrebați de pachetul {p.name}
+            </a>
+          </li>
+        );
+      })
+    }
+  </ul>
+
+  {
+    compact && (
+      <p class="mt-8 text-center">
+        <a href={u('/pachete/')} class="btn btn-line whitespace-normal text-center">
+          Vedeți tot ce include fiecare pachet
+        </a>
+      </p>
+    )
+  }
+</div>
+
+<script>
+  const fmt = (n: number) => `${n.toLocaleString('ro-RO')} lei`;
+  document.querySelectorAll<HTMLElement>('[data-pachete]').forEach((root) => {
+    const update = (ajutor: number) =>
+      root.querySelectorAll<HTMLElement>('[data-price]').forEach((card) => {
+        const rest = ajutor - Number(card.dataset.price);
+        const el = card.querySelector('[data-rest]');
+        if (!el) return;
+        el.innerHTML =
+          rest >= 0
+            ? `Din ajutorul de deces vă rămân <strong>${fmt(rest)}</strong>`
+            : `Ajutorul de deces acoperă ${fmt(ajutor)}, diferența este <strong>${fmt(-rest)}</strong>`;
+      });
+    root.querySelectorAll<HTMLInputElement>('input[name=ajutor]').forEach((r) =>
+      r.addEventListener('change', () => r.checked && update(Number(r.value))),
+    );
+  });
+</script>

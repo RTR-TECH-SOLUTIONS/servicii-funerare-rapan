@@ -1,0 +1,42 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import PacheteCards from '../components/PacheteCards.astro';
+import Extras from '../components/Extras.astro';
+import Faq from '../components/Faq.astro';
+import { faqMoney, photos, u } from '../data/site';
+---
+
+<Layout
+  active="pachete"
+  title="Pachete servicii funerare de la 3.500 lei, Bascov și Pitești | Răpan"
+  description="Pachet Basic 3.500 lei, Standard 4.500 lei, Premium 6.250 lei, cu sicriu, toaletizare și transport autorizat DSP. Toate intră în ajutorul de deces de 9.192 lei."
+>
+  <PageHeader
+    crumb="Pachete"
+    title="Pachete și prețuri"
+    lead="Prețul e spus de la început și nu se schimbă pe parcurs. Toate pachetele intră în ajutorul de deces pe care îl dă Casa de Pensii."
+    photo={photos.dricBiserica2}
+    photoPos="center 72%"
+  >
+    <a slot="actions" href={u('/ce-faceti-la-deces/')} class="btn btn-ghost-dark btn-lg max-sm:w-full">Ce acte trebuie</a>
+  </PageHeader>
+
+  <section class="section">
+    <div class="wrap">
+      <PacheteCards />
+    </div>
+  </section>
+
+  <section class="section pt-0">
+    <div class="wrap">
+      <Extras />
+    </div>
+  </section>
+
+  <section class="section pt-0">
+    <div class="wrap">
+      <Faq items={faqMoney} title="Despre bani și ajutorul de deces" lead="Ce întreabă familiile înainte să aleagă un pachet." />
+    </div>
+  </section>
+</Layout>

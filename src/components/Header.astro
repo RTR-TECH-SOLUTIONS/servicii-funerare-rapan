@@ -1,0 +1,103 @@
+---
+import { nav, site, u, type PageKey } from '../data/site';
+import Icon from './Icon.astro';
+import Logo from './Logo.astro';
+
+interface Props {
+  active: PageKey;
+}
+const { active } = Astro.props;
+---
+
+<!-- Topbar 44 px + header alb sticky (Beelsamen); V2: link activ ca pastilă, buton rotunjit. -->
+<div class="hidden bg-ink-900 text-[15px] text-on-dark lg:block" style="height:var(--topbar-h)">
+  <div class="wrap flex h-full items-center justify-between">
+    <p class="flex items-center gap-2">
+      <Icon name="pin" size={16} class="text-gold" />
+      {site.addressShort} și Pitești
+      <span class="text-gold" aria-hidden="true">·</span>
+      Disponibili non-stop
+    </p>
+    <a href={site.phoneHref} class="flex items-center gap-2 font-semibold text-gold-lt hover:text-white">
+      <Icon name="phone" size={16} />
+      {site.phone}
+    </a>
+  </div>
+</div>
+
+<header id="header" class="sticky top-0 z-50 border-b border-line/70 bg-white/90 backdrop-blur-md" style="height:var(--header-h)">
+  <div class="wrap flex h-full items-center justify-between gap-4">
+    <a href={u('/')} aria-label="Servicii Funerare Răpan, prima pagină" class="shrink-0">
+      <Logo class="origin-left scale-90 sm:scale-100" />
+    </a>
+
+    <nav aria-label="Meniu principal" class="hidden xl:block">
+      <ul class="flex items-center gap-1 text-[16px] font-medium text-heading">
+        {
+          nav.map((item) => (
+            <li>
+              <a
+                href={item.href}
+                aria-current={item.key === active ? 'page' : undefined}
+                class="block rounded-full px-3.5 py-2 transition-colors hover:bg-linen aria-[current=page]:bg-ink-900 aria-[current=page]:text-white"
+              >
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <a href={site.phoneHref} class="btn btn-gold hidden xl:inline-flex">
+      <Icon name="phone" size={18} />
+      Sunați acum
+    </a>
+
+    <button
+      id="menu-open"
+      type="button"
+      class="grid size-12 place-items-center rounded-full border border-line bg-white text-heading xl:hidden"
+      aria-label="Deschide meniul"
+      aria-expanded="false"
+      aria-controls="mobile-menu"
+    >
+      <Icon name="menu" size={22} />
+    </button>
+  </div>
+
+  <div id="mobile-menu" class="hidden px-3 pb-3 xl:hidden">
+    <nav aria-label="Meniu mobil" class="rounded-[24px] border border-line bg-white p-3 shadow-[0_24px_48px_-24px_rgb(20_17_14/0.35)]">
+      <ul class="grid gap-1">
+        <li><a href={u('/')} class="block rounded-2xl px-4 py-3 text-[17px] font-medium text-heading aria-[current=page]:bg-linen" aria-current={active === 'acasa' ? 'page' : undefined}>Acasă</a></li>
+        {
+          nav.map((item) => (
+            <li>
+              <a
+                href={item.href}
+                aria-current={item.key === active ? 'page' : undefined}
+                class="block rounded-2xl px-4 py-3 text-[17px] font-medium text-heading aria-[current=page]:bg-linen"
+              >
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+      <a href={site.phoneHref} class="btn btn-gold btn-lg mt-2 w-full">
+        <Icon name="phone" size={18} />
+        Sunați: {site.phone}
+      </a>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const btn = document.getElementById('menu-open');
+  const menu = document.getElementById('mobile-menu');
+  btn?.addEventListener('click', () => {
+    const open = menu?.classList.toggle('hidden') === false;
+    btn.setAttribute('aria-expanded', String(open));
+    btn.setAttribute('aria-label', open ? 'Închide meniul' : 'Deschide meniul');
+  });
+</script>

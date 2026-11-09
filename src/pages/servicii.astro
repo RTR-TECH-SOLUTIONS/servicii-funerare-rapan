@@ -1,0 +1,92 @@
+---
+import { Image } from 'astro:assets';
+import Layout from '../layouts/Layout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import Extras from '../components/Extras.astro';
+import Icon from '../components/Icon.astro';
+import { photos, services, u, waLink } from '../data/site';
+---
+
+<Layout
+  active="servicii"
+  title="Servicii funerare Bascov și Pitești: transport, sicrie, capelă, pomeni | Răpan"
+  description="Transport funerar cu mașină autorizată DSP, sicrie și accesorii, pregătire și capelă acasă, pomeni și parastase. Non-stop în Bascov, Valea Ursului și Pitești."
+>
+  <PageHeader
+    crumb="Servicii"
+    title="Tot ce ține de o înmormântare, făcut de aceiași oameni"
+    lead="De la transportul decedatului și pregătire, până la capelă, sicriu și masa de pomană. Vă spunem prețul înainte și nu vă trimitem la altă firmă."
+    photo={photos.dricBiserica}
+  >
+    <a slot="actions" href={u('/pachete/')} class="btn btn-ghost-dark btn-lg max-sm:w-full">Vedeți pachetele</a>
+  </PageHeader>
+
+  <section class="section">
+    <div class="wrap space-y-6">
+      {
+        services.map((s, i) => (
+          <article id={s.id} class="reveal card grid scroll-mt-32 overflow-hidden lg:grid-cols-2">
+            <div class={`grid gap-3 p-3 ${s.extra ? 'grid-cols-[1.4fr_1fr]' : ''} ${i % 2 ? 'lg:order-2' : ''}`}>
+              <div class="relative min-h-[300px] sm:min-h-[380px]">
+                <Image
+                  src={s.photo.img}
+                  alt={s.photo.alt}
+                  widths={[500, 800, 1100]}
+                  sizes="(min-width: 1024px) 560px, 100vw"
+                  class="ph absolute inset-0 h-full w-full object-cover"
+                />
+              </div>
+              {s.extra && (
+                <div class="relative min-h-[300px] sm:min-h-[380px]">
+                  <Image
+                    src={s.extra.img}
+                    alt={s.extra.alt}
+                    widths={[400, 700]}
+                    sizes="(min-width: 1024px) 240px, 40vw"
+                    class="ph absolute inset-0 h-full w-full object-cover"
+                  />
+                </div>
+              )}
+            </div>
+            <div class="flex flex-col justify-center p-7 sm:p-10">
+              <h2 class="text-[clamp(2rem,1.6rem+1.2vw,2.6rem)]">{s.title}</h2>
+              <div class="mt-4 space-y-3">
+                {s.text.map((t) => (
+                  <p>{t}</p>
+                ))}
+              </div>
+              <ul class="mt-6 flex flex-col gap-2.5">
+                {s.points.map((p) => (
+                  <li class="flex items-center gap-3">
+                    <span class="grid size-6 shrink-0 place-items-center rounded-full bg-[#f3e6c4] text-gold-dk">
+                      <Icon name="check" size={14} />
+                    </span>
+                    {p}
+                  </li>
+                ))}
+              </ul>
+              <div class="mt-8 flex flex-wrap gap-3">
+                {s.id === 'pomeni-si-parastase' ? (
+                  <a href={u('/pomeni-si-parastase/')} class="btn btn-ink">
+                    Vedeți meniurile
+                  </a>
+                ) : (
+                  <a href={waLink(`Bună ziua, aș vrea informații despre: ${s.title.toLowerCase()}. `)} target="_blank" rel="noopener" class="btn btn-ink">
+                    <Icon name="whatsapp" size={18} />
+                    Întrebați pe WhatsApp
+                  </a>
+                )}
+              </div>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="section pt-0">
+    <div class="wrap">
+      <Extras />
+    </div>
+  </section>
+</Layout>

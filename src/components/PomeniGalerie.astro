@@ -1,0 +1,71 @@
+---
+import { Image, getImage } from 'astro:assets';
+import { photos, pomeni } from '../data/site';
+import Icon from './Icon.astro';
+
+interface Props {
+  limit?: number;
+}
+const { limit } = Astro.props;
+const dishes = [...pomeni, { ...photos.coliva, caption: 'Colivă „Veșnica pomenire”' }].slice(0, limit);
+const large = await Promise.all(dishes.map((p) => getImage({ src: p.img, width: 1600, format: 'webp' })));
+// Mozaic: unele poze ocupă două rânduri, ca grila să nu fie perfect uniformă.
+// 5 poze + 1 înaltă = 3×2 plin; 7 poze + 2 înalte = 3×3 plin.
+const tall = new Set(dishes.length <= 5 ? [1] : [1, 4]);
+---
+
+<ul class="grid auto-rows-[180px] grid-cols-2 gap-3 sm:auto-rows-[220px] md:grid-cols-3" data-galerie>
+  {
+    dishes.map((p, i) => (
+      <li class={tall.has(i) ? 'row-span-2' : ''}>
+        <button
+          type="button"
+          class="group relative block h-full w-full overflow-hidden rounded-[22px] bg-ink-900"
+          data-full={large[i].src}
+          data-caption={p.caption}
+          aria-label={`Mărește: ${p.caption}`}
+        >
+          <Image
+            src={p.img}
+            alt={p.alt}
+            widths={[300, 500, 800]}
+            sizes="(min-width: 1024px) 380px, 50vw"
+            class="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.04]"
+          />
+          <span class="absolute inset-x-2 bottom-2 rounded-full bg-black/55 px-3 py-1.5 text-left text-[13px] font-semibold text-white backdrop-blur">
+            {p.caption}
+          </span>
+        </button>
+      </li>
+    ))
+  }
+</ul>
+
+<dialog class="m-auto max-h-[92vh] max-w-[min(1100px,94vw)] overflow-hidden rounded-[24px] bg-ink-950 p-0 backdrop:bg-black/80" data-lightbox>
+  <img src="" alt="" class="max-h-[82vh] w-auto" />
+  <div class="flex items-center justify-between gap-4 px-5 py-3 text-white">
+    <p class="text-[15px]" data-caption></p>
+    <button type="button" class="grid size-10 place-items-center rounded-full border border-white/30" data-close aria-label="Închide">
+      <Icon name="x" size={20} />
+    </button>
+  </div>
+</dialog>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-galerie]').forEach((grid) => {
+    const box = grid.nextElementSibling as HTMLDialogElement | null;
+    const img = box?.querySelector('img');
+    const cap = box?.querySelector('[data-caption]');
+    grid.querySelectorAll<HTMLButtonElement>('button').forEach((b) =>
+      b.addEventListener('click', () => {
+        if (!box || !img || !cap) return;
+        img.src = b.dataset.full ?? '';
+        img.alt = b.querySelector('img')?.alt ?? '';
+        cap.textContent = b.dataset.caption ?? '';
+        box.showModal();
+      }),
+    );
+    box?.querySelector('[data-close]')?.addEventListener('click', () => box.close());
+    box?.addEventListener('click', (e) => e.target === box && box.close());
+  });
+</script>

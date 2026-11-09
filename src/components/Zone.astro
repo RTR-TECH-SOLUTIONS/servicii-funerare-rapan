@@ -1,0 +1,29 @@
+---
+import { site, zones } from '../data/site';
+import Icon from './Icon.astro';
+---
+
+<!-- „Zone deservite” cu timp de sosire (Ultimul Drum), ca rânduri într-un card rotunjit. -->
+<div class="reveal card overflow-hidden">
+  {
+    zones.map((z, i) => (
+      <div class={`grid gap-3 px-6 py-6 md:grid-cols-[230px_1fr_200px] md:items-center md:gap-8 md:px-8 ${i > 0 ? 'border-t border-line' : ''}`}>
+        <h3 class="flex items-center gap-3 text-[26px]">
+          <span class="grid size-9 shrink-0 place-items-center rounded-full bg-[#f3e6c4] text-gold-dk">
+            <Icon name="pin" size={17} />
+          </span>
+          {z.area}
+        </h3>
+        <p class="text-body">{z.places.join(', ')}</p>
+        <p class="md:text-right">
+          <span class="block font-semibold text-heading">{z.time}</span>
+          <span class="mt-1 inline-block rounded-full bg-linen px-3 py-0.5 text-[14px] text-gold-dk">{z.note}</span>
+        </p>
+      </div>
+    ))
+  }
+</div>
+<p class="mt-4 text-[15px] text-muted">
+  Timpii sunt orientativi, de la telefon până ajungem la adresă. Pentru o adresă anume, sunați la{' '}
+  <a href={site.phoneHref} class="link-gold">{site.phone}</a>.
+</p>

@@ -1,0 +1,58 @@
+---
+import { Image } from 'astro:assets';
+import { services, u } from '../data/site';
+import Icon from './Icon.astro';
+
+// Mozaic: transportul pe lat, capela pe înalt, celelalte două mici.
+const layout: Record<string, string> = {
+  'transport-funerar': 'lg:col-span-2',
+  'capela-si-pregatire': 'lg:row-span-2',
+  'sicrie-si-accesorii': '',
+  'pomeni-si-parastase': '',
+};
+const order = ['transport-funerar', 'capela-si-pregatire', 'sicrie-si-accesorii', 'pomeni-si-parastase'];
+const items = order.map((id) => services.find((s) => s.id === id)!);
+---
+
+<section class="section">
+  <div class="wrap">
+    <div class="reveal grid gap-6 lg:grid-cols-2 lg:items-end">
+      <h2 class="max-w-[540px]">Ne ocupăm de tot, de la primul telefon până la pomană</h2>
+      <p class="lead max-w-[520px] text-muted lg:justify-self-end">
+        Suntem o firmă de familie din Valea Ursului. Avem magazinul, mașinile și oamenii noștri, așa că nu vă trimitem de la
+        unul la altul.
+      </p>
+    </div>
+
+    <ul class="mt-12 grid auto-rows-[320px] gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:auto-rows-[300px]">
+      {
+        items.map((s) => (
+          <li class={`reveal ${layout[s.id]}`}>
+            <a
+              href={u(`/servicii/#${s.id}`)}
+              class="group relative block h-full overflow-hidden rounded-[28px] bg-ink-900"
+            >
+              <Image
+                src={s.photo.img}
+                alt={s.photo.alt}
+                widths={[500, 800, 1200]}
+                sizes="(min-width: 1024px) 600px, (min-width: 640px) 50vw, 100vw"
+                class="absolute inset-0 h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.04]"
+              />
+              <span class="absolute inset-0 bg-[linear-gradient(180deg,rgb(13_11_9/0)_35%,rgb(13_11_9/0.88)_100%)]" />
+              <span class="absolute inset-x-0 bottom-0 flex items-end justify-between gap-4 p-6 text-white">
+                <span>
+                  <span class="block font-serif text-[30px] leading-tight font-semibold">{s.title}</span>
+                  <span class="mt-1 block max-w-[440px] text-[15px] leading-snug text-white/80">{s.short}</span>
+                </span>
+                <span class="grid size-11 shrink-0 place-items-center rounded-full bg-white/15 backdrop-blur transition-colors group-hover:bg-gold group-hover:text-[#231a10]">
+                  <Icon name="plus" size={18} />
+                </span>
+              </span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>

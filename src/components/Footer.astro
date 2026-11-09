@@ -1,0 +1,76 @@
+---
+import { nav, site, u, waLink, zones } from '../data/site';
+import Icon from './Icon.astro';
+import Logo from './Logo.astro';
+---
+
+<!-- Banda aurie de final (Beelsamen), în V2 ca panou rotunjit -->
+<section class="px-3 pb-3">
+  <div class="panel text-[#231a10]" style="background:var(--gold-grad)">
+    <div class="wrap flex flex-col items-start justify-between gap-6 py-12 md:flex-row md:items-center md:py-14">
+      <div>
+        <h2 class="text-[clamp(2rem,1.5rem+1.6vw,2.8rem)] text-[#1f160b]">Ne puteți suna acum, la orice oră</h2>
+        <p class="mt-2 text-[17px] text-[#3a2b12]">Vă spunem ce e de făcut, fără nicio obligație.</p>
+      </div>
+      <div class="flex flex-wrap gap-3">
+        <a href={site.phoneHref} class="btn btn-ink btn-lg">
+          <Icon name="phone" size={20} />
+          {site.phone}
+        </a>
+        <a href={waLink()} target="_blank" rel="noopener" class="btn btn-lg border border-[#231a10]/30 bg-white/35 text-[#231a10] hover:bg-white/60">
+          <Icon name="whatsapp" size={20} />
+          WhatsApp
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="bg-ink-950 text-[15px] text-on-dark-muted">
+  <div class="wrap grid gap-10 py-14 md:grid-cols-[1.3fr_1fr_1fr]">
+    <div>
+      <Logo tone="light" />
+      <p class="mt-5 max-w-[340px]">
+        Servicii funerare complete în Bascov, Valea Ursului, Pitești și comunele din jur. Disponibili non-stop.
+      </p>
+      <p class="mt-4">
+        <a href={site.phoneHref} class="text-[18px] font-semibold text-gold-lt hover:text-white">{site.phone}</a><br />
+        {site.address}
+      </p>
+    </div>
+    <nav aria-label="Pagini">
+      <h2 class="font-sans text-[15px] font-semibold text-white">Pagini</h2>
+      <ul class="mt-4 space-y-2">
+        <li><a href={u('/')} class="hover:text-white">Acasă</a></li>
+        {nav.map((n) => <li><a href={n.href} class="hover:text-white">{n.label}</a></li>)}
+      </ul>
+    </nav>
+    <div>
+      <h2 class="font-sans text-[15px] font-semibold text-white">Zone</h2>
+      <!-- TODO(real): pagini separate pe localitate pentru SEO local (servicii funerare Bascov / Pitești / Bradu ...). -->
+      <ul class="mt-4 space-y-2">
+        {zones.map((z) => <li>{z.area}</li>)}
+        <li>Transport în toată țara, la cerere</li>
+      </ul>
+    </div>
+  </div>
+  <!-- Pe mobil, sub bara plutitoare Sună / WhatsApp rămâne fundalul negru al footer-ului (nu un gol alb). -->
+  <div class="border-t border-white/10 pb-[84px] lg:pb-0">
+    <div class="wrap flex flex-col gap-2 py-5 text-[13px] sm:flex-row sm:justify-between">
+      <p>© {new Date().getFullYear()} {site.legal.name} · CUI {site.legal.cui}</p>
+      <p>Autorizat DSP Argeș · Mașină mortuară {site.legal.hearse}</p>
+    </div>
+  </div>
+</footer>
+
+<!-- Bara de jos pe mobil: Sună + WhatsApp, ca pastilă plutitoare -->
+<div class="fixed inset-x-3 bottom-3 z-50 grid h-[60px] grid-cols-2 gap-1.5 rounded-full bg-ink-900/95 p-1.5 shadow-[0_16px_40px_-12px_rgb(0_0_0/0.55)] backdrop-blur lg:hidden">
+  <a href={site.phoneHref} class="flex items-center justify-center gap-2 rounded-full bg-[linear-gradient(#e3c36a,#c79a38)] font-bold text-[#231a10]">
+    <Icon name="phone" size={20} />
+    Sunați
+  </a>
+  <a href={waLink()} target="_blank" rel="noopener" class="flex items-center justify-center gap-2 rounded-full font-bold text-white">
+    <Icon name="whatsapp" size={20} class="text-[#5bd18b]" />
+    WhatsApp
+  </a>
+</div>

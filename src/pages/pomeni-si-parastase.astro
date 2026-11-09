@@ -1,0 +1,79 @@
+---
+import { Image } from 'astro:assets';
+import Layout from '../layouts/Layout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import PomeniGalerie from '../components/PomeniGalerie.astro';
+import PomanaForm from '../components/PomanaForm.astro';
+import Faq from '../components/Faq.astro';
+import { faqPomeni, photos, pomeni, site } from '../data/site';
+
+const cum = [
+  { t: 'Ne spuneți ocazia și data', d: 'Înmormântare sau parastas, la ce dată și pentru câte persoane.' },
+  { t: 'Alegeți meniul', d: 'De post sau de dulce. Vă trimitem pe WhatsApp variantele și prețul pe porție.' },
+  { t: 'Vă aducem mâncarea', d: 'În caserole, la casă sau la biserică, gata de împărțit. Coliva și colacii vin odată cu ea.' },
+];
+const platou = pomeni.find((p) => p.caption === 'Platouri reci')!;
+---
+
+<Layout
+  active="pomeni"
+  title="Pomeni și parastase Pitești și Bascov: meniuri de post și de dulce | Răpan"
+  description="Gătim pentru pomana de la înmormântare și pentru parastasele de 3, 9 și 40 de zile, 6 luni și un an. Meniuri în caserole, colivă și colaci. Tel. 0751 692 692."
+>
+  <PageHeader
+    crumb="Pomeni și parastase"
+    title="Pomeni și parastase, gătite de noi"
+    lead="Pregătim masa de la înmormântare și parastasele de 3, 9 și 40 de zile, de 6 luni și de un an. Meniuri de post sau de dulce, în caserole, gata de împărțit."
+    photo={platou}
+  />
+
+  <section class="section">
+    <div class="wrap grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:gap-14">
+      <div class="reveal lg:sticky lg:top-[calc(var(--header-h)+24px)] lg:self-start">
+        <PomanaForm />
+        <figure class="mt-4 grid grid-cols-[110px_1fr] items-center gap-4 rounded-[24px] bg-linen p-3">
+          <Image src={photos.coliva.img} alt={photos.coliva.alt} widths={[300]} sizes="110px" class="aspect-square w-full rounded-[18px] object-cover" />
+          <figcaption class="text-[15px]">
+            <span class="block font-serif text-[22px] font-semibold text-heading">Colivă „Veșnica pomenire”</span>
+            Ornată cu cruce și text, pentru înmormântare și pentru fiecare parastas.
+          </figcaption>
+        </figure>
+      </div>
+      <div class="reveal">
+        <h2>Ce am gătit în ultima vreme</h2>
+        <p class="mt-3 mb-8 text-muted">Pozele sunt de la mesele pregătite de noi. Apăsați pe o poză ca s-o vedeți mare.</p>
+        <PomeniGalerie />
+      </div>
+    </div>
+  </section>
+
+  <section class="px-3">
+    <div class="panel bg-ink-900 text-on-dark">
+      <div class="wrap py-16 lg:py-20">
+        <h2 class="reveal text-white">Cum comandați</h2>
+        <ol class="mt-10 grid gap-4 md:grid-cols-3">
+          {
+            cum.map((c, i) => (
+              <li class="reveal rounded-[24px] bg-white/5 p-7">
+                <span class="grid size-12 place-items-center rounded-full bg-[linear-gradient(#e3c36a,#c79a38)] font-serif text-[24px] font-semibold text-[#231a10]">
+                  {i + 1}
+                </span>
+                <h3 class="mt-5 text-[26px] text-white">{c.t}</h3>
+                <p class="mt-2">{c.d}</p>
+              </li>
+            ))
+          }
+        </ol>
+        <p class="reveal mt-8">
+          Sau sunați direct la <a href={site.phoneHref} class="font-semibold text-gold-lt underline underline-offset-4">{site.phone}</a>.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <Faq items={faqPomeni} title="Întrebări despre pomeni" />
+    </div>
+  </section>
+</Layout>

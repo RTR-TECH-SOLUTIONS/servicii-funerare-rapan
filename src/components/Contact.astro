@@ -1,0 +1,70 @@
+---
+import { site, waLink } from '../data/site';
+import Icon from './Icon.astro';
+
+const rows = [
+  ['Denumire', site.legal.name],
+  ['CUI', site.legal.cui],
+  ['Nr. Registrul Comerțului', site.legal.reg],
+  ['Punct de lucru', site.address],
+  ['Autorizare', 'DSP Argeș, prestator de servicii funerare (HG 741/2016)'],
+  ['Mașină mortuară', site.legal.hearse],
+  ['Program', 'Non-stop, 7 zile din 7'],
+];
+const mapQuery = encodeURIComponent('Valea Ursului 203, Bascov, Argeș');
+---
+
+<!-- „Fișa firmei” (Beelsamen): datele oficiale ca tabel + harta, în carduri rotunjite. -->
+<div class="grid gap-6 lg:grid-cols-2">
+  <div class="space-y-4">
+    <div class="grid gap-3 sm:grid-cols-2">
+      <a href={site.phoneHref} class="reveal flex items-center gap-4 rounded-[24px] bg-ink-900 p-5 text-white transition-colors hover:bg-ink-700">
+        <span class="grid size-12 place-items-center rounded-full bg-[linear-gradient(#e3c36a,#c79a38)] text-[#231a10]">
+          <Icon name="phone" size={22} />
+        </span>
+        <span>
+          <span class="block text-[14px] text-on-dark-muted">Telefon, non-stop</span>
+          <span class="block text-[20px] font-bold">{site.phone}</span>
+        </span>
+      </a>
+      <a href={waLink()} target="_blank" rel="noopener" class="reveal card flex items-center gap-4 p-5 transition-colors hover:border-gold">
+        <span class="grid size-12 place-items-center rounded-full bg-[#e3f3ea] text-wa">
+          <Icon name="whatsapp" size={24} />
+        </span>
+        <span>
+          <span class="block text-[14px] text-muted">WhatsApp</span>
+          <span class="block text-[20px] font-bold text-heading">{site.phone}</span>
+        </span>
+      </a>
+    </div>
+
+    <div class="reveal card overflow-hidden">
+      <table class="w-full text-left text-[16px]">
+        <caption class="border-b border-line px-6 py-4 text-left font-serif text-[26px] font-semibold text-heading">Fișa firmei</caption>
+        <tbody>
+          {
+            rows.map(([k, v], i) => (
+              <tr class={`align-top ${i % 2 ? 'bg-ivory' : ''}`}>
+                <th scope="row" class="w-[42%] px-6 py-3 font-normal text-muted">{k}</th>
+                <td class="py-3 pr-6 font-medium text-heading">{v}</td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    </div>
+    <a href={site.facebook} target="_blank" rel="noopener" class="link-gold inline-flex items-center gap-2 text-[15px]">
+      <Icon name="facebook" size={18} />
+      Casa funerară Răpan pe Facebook
+    </a>
+  </div>
+
+  <div class="reveal overflow-hidden rounded-[28px] border border-line bg-white">
+    <iframe
+      title="Harta: Servicii Funerare Răpan, Valea Ursului, Bascov"
+      src={`https://www.google.com/maps?q=${mapQuery}&z=13&output=embed`}
+      loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade"
+      class="block h-[360px] w-full lg:h-full lg:min-h-[560px]"></iframe>
+  </div>
+</div>

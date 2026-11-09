@@ -1,0 +1,38 @@
+---
+import { reviews, site } from '../data/site';
+import Icon from './Icon.astro';
+
+const [first, ...rest] = reviews;
+---
+
+<!-- Recenzii doar text (Beelsamen), una mare și restul în listă, fără avatare. -->
+<div class="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:gap-14">
+  <div class="reveal">
+    <h2>Ce spun familiile</h2>
+    <p class="mt-4 inline-flex flex-wrap items-center gap-x-3 gap-y-1 rounded-full bg-white px-4 py-2 text-[15px] text-muted shadow-[0_8px_24px_-16px_rgb(40_30_10/0.4)]">
+      <span class="flex text-gold" aria-hidden="true">
+        {Array.from({ length: 5 }).map(() => <Icon name="star" size={16} class="fill-current" />)}
+      </span>
+      <span><strong class="text-heading">{site.google.rating}</strong> din {site.google.count} de recenzii pe Google · 11 recomandări pe Facebook</span>
+    </p>
+    <figure class="mt-10">
+      <blockquote class="font-serif text-[clamp(1.9rem,1.4rem+1.6vw,2.7rem)] leading-[1.15] font-medium text-heading">
+        „{first.text}”
+      </blockquote>
+      <figcaption class="mt-5 text-[15px] text-muted">{first.name}, pe Facebook, {first.when}</figcaption>
+    </figure>
+  </div>
+
+  <ul class="space-y-3 self-end">
+    {
+      rest.map((r) => (
+        <li class="reveal card px-6 py-5">
+          <p class="text-[17px] text-heading">„{r.text}”</p>
+          <p class="mt-1.5 text-[14px] text-muted">
+            {r.name}, {r.when}
+          </p>
+        </li>
+      ))
+    }
+  </ul>
+</div>

@@ -1,0 +1,61 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import Pasi from '../components/Pasi.astro';
+import Faq from '../components/Faq.astro';
+import { faqDeces, lei, photos, site, u } from '../data/site';
+---
+
+<Layout
+  active="deces"
+  title="Ce faceți în caz de deces: pașii, actele și ajutorul de deces 2026 | Răpan"
+  description="Ce faceți în primele ore după un deces acasă sau la spital, ce acte trebuie și cum obțineți ajutorul de deces de 9.192 lei în 2026. Vă ajutăm non-stop: 0751 692 692."
+>
+  <PageHeader
+    crumb="Ce faceți la deces"
+    title="Ce faceți în primele ore"
+    lead="Nu trebuie să știți dinainte cum se face. Ne sunați, iar noi vă spunem fiecare pas și îl facem împreună cu dumneavoastră."
+    photo={photos.capela}
+    photoPos="center 35%"
+  />
+
+  <section class="section">
+    <div class="wrap">
+      <Pasi />
+    </div>
+  </section>
+
+  <section class="px-3">
+    <div class="panel bg-linen">
+      <div class="wrap grid gap-10 py-16 lg:grid-cols-2 lg:items-center lg:py-20">
+        <div class="reveal">
+          <h2>Ajutorul de deces în 2026</h2>
+          <p class="lead mt-4 text-muted">
+            Casa de Pensii dă un ajutor pentru cheltuielile de înmormântare. Îl primește persoana care face dovada că a plătit
+            înmormântarea, cu factura și chitanța de la noi.
+          </p>
+          <a href={u('/pachete/')} class="btn btn-ink btn-lg mt-8">Vedeți ce acoperă din pachete</a>
+        </div>
+        <dl class="reveal grid gap-4 sm:grid-cols-2">
+          <div class="card p-7">
+            <dt class="text-muted">Pensionar sau asigurat</dt>
+            <dd class="mt-2 font-serif text-[48px] leading-none font-semibold text-heading">{lei(site.ajutor.asigurat)}</dd>
+          </div>
+          <div class="card p-7">
+            <dt class="text-muted">Membru de familie al unui asigurat</dt>
+            <dd class="mt-2 font-serif text-[48px] leading-none font-semibold text-heading">{lei(site.ajutor.familie)}</dd>
+          </div>
+          <p class="text-[14px] text-muted sm:col-span-2">
+            Valori pentru decesele de la 30 martie 2026. Vă ajutăm să depuneți dosarul.
+          </p>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <Faq items={faqDeces} title="Întrebări din primele ore" />
+    </div>
+  </section>
+</Layout>

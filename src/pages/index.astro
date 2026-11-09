@@ -1,0 +1,63 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Hero from '../components/Hero.astro';
+import ServiciiBento from '../components/ServiciiBento.astro';
+import PacheteCards from '../components/PacheteCards.astro';
+import PomeniGalerie from '../components/PomeniGalerie.astro';
+import DespreTeaser from '../components/DespreTeaser.astro';
+import Recenzii from '../components/Recenzii.astro';
+import Icon from '../components/Icon.astro';
+import { u } from '../data/site';
+---
+
+<Layout
+  active="acasa"
+  title="Servicii funerare non-stop Bascov și Pitești | Răpan, Valea Ursului"
+  description="Servicii funerare complete în Bascov, Valea Ursului și Pitești, non-stop: transport funerar autorizat DSP, sicrie, capelă, pomeni și parastase. Pachete de la 3.500 lei. Tel. 0751 692 692."
+>
+  <Hero />
+  <ServiciiBento />
+
+  <section class="section pt-0">
+    <div class="wrap">
+      <div class="reveal mb-8 grid gap-4 lg:grid-cols-2 lg:items-end">
+        <h2>Pachete cu prețul spus de la început</h2>
+        <p class="lead max-w-[520px] text-muted lg:justify-self-end">
+          Toate intră în ajutorul de deces de la Casa de Pensii. Alegeți mai jos cine era decedatul și vedeți ce vă rămâne.
+        </p>
+      </div>
+      <PacheteCards compact />
+    </div>
+  </section>
+
+  <section class="px-3 pb-[var(--section-y)]">
+    <div class="panel bg-linen">
+      <div class="wrap grid gap-10 py-16 lg:grid-cols-[0.85fr_1.15fr] lg:items-center lg:gap-14 lg:py-20">
+        <div class="reveal">
+          <h2>Pomeni și parastase, gătite de noi</h2>
+          <p class="lead mt-4 text-muted">
+            Masa de la înmormântare și parastasele de 3, 9 și 40 de zile, de 6 luni și de un an. Meniuri de post sau de dulce,
+            în caserole, gata de împărțit la casă sau la biserică.
+          </p>
+          <div class="mt-8 flex flex-wrap gap-3">
+            <a href={u('/pomeni-si-parastase/')} class="btn btn-ink btn-lg">
+              Vedeți meniurile
+              <Icon name="plus" size={16} />
+            </a>
+          </div>
+        </div>
+        <div class="reveal">
+          <PomeniGalerie limit={5} />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <DespreTeaser />
+
+  <section class="section">
+    <div class="wrap">
+      <Recenzii />
+    </div>
+  </section>
+</Layout>

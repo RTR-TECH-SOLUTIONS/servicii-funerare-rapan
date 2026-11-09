@@ -1,0 +1,79 @@
+---
+import { Image } from 'astro:assets';
+import heroImg from '../assets/foto/hero-capela.png';
+import { facts, lei, packages, site, u } from '../data/site';
+import Icon from './Icon.astro';
+
+const from = Math.min(...packages.map((p) => p.price));
+---
+
+<!--
+  Hero: poză pe toată lățimea cu text alb în stânga (Memoris), tipografia Beelsamen, cuvântul în italic (Ultimul Drum).
+  V2: încadrat ca panou rotunjit pe desktop, banda aurie plutește peste marginea de jos.
+-->
+<section id="top" class="px-0 lg:px-3 lg:pt-3">
+  <div class="relative isolate overflow-hidden bg-ink-950 lg:rounded-[32px]">
+    <Image
+      src={heroImg}
+      alt="Capelă ortodoxă la lumina lumânărilor, cu trandafiri albi pe masă și o icoană în fundal"
+      widths={[800, 1280, 1920, 2688]}
+      sizes="100vw"
+      loading="eager"
+      fetchpriority="high"
+      class="absolute inset-x-0 top-0 -z-10 h-[380px] w-full object-cover object-[92%_64%] lg:inset-0 lg:h-full lg:object-right"
+    />
+    <!-- Pe mobil poza stă sus (trandafiri + lumânări) și textul dedesubt; pe desktop textul e peste partea întunecată. -->
+    <div
+      class="absolute inset-x-0 top-0 -z-10 h-[380px] bg-[linear-gradient(180deg,rgb(13_11_9/0.05)_0%,rgb(13_11_9/0.3)_55%,rgb(13_11_9/1)_100%)] lg:inset-0 lg:h-full lg:bg-[linear-gradient(90deg,rgb(13_11_9/0.92)_0%,rgb(13_11_9/0.78)_45%,rgb(13_11_9/0.15)_80%)]"
+    >
+    </div>
+
+    <div class="wrap flex min-h-[min(720px,calc(100svh-var(--header-h)-var(--topbar-h)-12px))] flex-col justify-center pt-[270px] pb-12 lg:pt-20 lg:pb-32">
+      <div class="max-w-[640px]">
+        <h1 class="text-white">
+          Servicii funerare <em class="font-medium whitespace-nowrap text-gold-lt">non-stop</em> în Bascov și Pitești
+        </h1>
+        <p class="lead mt-6 max-w-[560px] text-on-dark">
+          Ne sunați la orice oră și venim noi, acasă sau la spital. Ne ocupăm de acte, de pregătire, de transport și de
+          masa de pomană. <strong class="font-semibold text-white"
+            >Pachetele încep de la {lei(from)} și se acoperă din ajutorul de deces de {lei(site.ajutor.asigurat)}.</strong
+          >
+        </p>
+        <div class="mt-8 flex flex-wrap gap-3">
+          <a href={site.phoneHref} class="btn btn-gold btn-lg max-sm:w-full">
+            <Icon name="phone" size={20} />
+            Sunați: {site.phone}
+          </a>
+          <a href={u('/pachete/')} class="btn btn-ghost-dark btn-lg max-sm:w-full">Vedeți pachetele</a>
+        </div>
+        <p class="mt-5 text-[15px] text-on-dark-muted">
+          Vă răspunde direct domnul Neluțu Răpan.{' '}
+          <a href={u('/ce-faceti-la-deces/')} class="font-semibold text-gold-lt underline underline-offset-4">Ce faceți în primele ore</a>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Banda aurie cu 3 fapte (Beelsamen), rotunjită și suprapusă peste marginea hero-ului pe desktop -->
+  <div class="wrap relative z-10 mt-4 lg:-mt-16">
+    <ul
+      class="grid overflow-hidden rounded-[24px] text-[#231a10] shadow-[0_24px_48px_-24px_rgb(60_40_10/0.5)] md:grid-cols-3"
+      style="background:var(--gold-grad)"
+      aria-label="Pe scurt"
+    >
+      {
+        facts.map((f, i) => (
+          <li class={`flex items-center gap-4 px-6 py-5 md:py-7 ${i > 0 ? 'border-t border-[#231a10]/15 md:border-t-0 md:border-l' : ''}`}>
+            <span class="grid size-12 shrink-0 place-items-center rounded-full bg-white/40">
+              <Icon name={f.icon} size={24} class="text-[#3a2b12]" />
+            </span>
+            <span>
+              <span class="block text-[18px] leading-tight font-bold">{f.title}</span>
+              <span class="block text-[15px] leading-snug text-[#3a2b12]">{f.text}</span>
+            </span>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>

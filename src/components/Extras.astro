@@ -1,0 +1,83 @@
+---
+import { extras, notIncluded, site, u } from '../data/site';
+import Icon from './Icon.astro';
+
+interface Props {
+  showNotIncluded?: boolean;
+}
+const { showNotIncluded = true } = Astro.props;
+---
+
+<!--
+  Înlocuiește chip-urile „Se pot adăuga la cerere” (respinse de Mario): clipul clientului cu prosoapele și lumânările
+  pregătite + lista ca rânduri cu titlu și o frază, într-un panou rotunjit.
+-->
+<div class="reveal panel grid bg-white shadow-[0_24px_60px_-32px_rgb(40_30_10/0.35)] lg:grid-cols-[0.8fr_1.2fr]">
+  <div class="relative min-h-[420px] bg-ink-950">
+    <video
+      class="absolute inset-0 h-full w-full object-cover"
+      muted
+      loop
+      playsinline
+      preload="metadata"
+      poster={u('/video/prosoape-lumanari.jpg')}
+      data-autoplay
+      aria-label="Prosoape cu lumânări, pregătite în coșuri pentru priveghi"
+    >
+      <source src={u('/video/prosoape-lumanari.webm')} type="video/webm" />
+      <source src={u('/video/prosoape-lumanari.mp4')} type="video/mp4" />
+    </video>
+    <p class="absolute inset-x-4 bottom-4 rounded-2xl bg-black/55 px-4 py-3 text-[14px] text-white backdrop-blur">
+      Prosoape cu lumânări, pregătite de noi pentru priveghi.
+    </p>
+  </div>
+
+  <div class="p-7 sm:p-10">
+    <h2 class="text-[clamp(2rem,1.6rem+1.2vw,2.6rem)]">Mai avem în magazin</h2>
+    <p class="mt-3 text-muted">Se pot adăuga la orice pachet sau se iau separat. Prețul vi-l spunem pe loc.</p>
+
+    <ul class="mt-7 grid gap-x-8 sm:grid-cols-2">
+      {
+        extras.map((e) => (
+          <li class="flex gap-4 border-t border-line py-4">
+            <span class="mt-0.5 grid size-9 shrink-0 place-items-center rounded-full bg-[#f3e6c4] text-gold-dk">
+              <Icon name="plus" size={16} />
+            </span>
+            <span>
+              <span class="block font-semibold text-heading">{e.title}</span>
+              <span class="block text-[15px] leading-snug text-muted">{e.text}</span>
+            </span>
+          </li>
+        ))
+      }
+    </ul>
+
+    {
+      showNotIncluded && (
+        <div class="mt-6 rounded-[20px] bg-linen p-5">
+          <p class="font-semibold text-heading">Nu intră în niciun pachet</p>
+          <p class="mt-1 text-[15px] text-muted">
+            {notIncluded.map((n, i) => (i ? n.toLowerCase() : n)).join(', ')}. Se plătesc separat, dar vă ajutăm să le
+            organizați.
+          </p>
+        </div>
+      )
+    }
+
+    <a href={site.phoneHref} class="btn btn-ink mt-7">
+      <Icon name="phone" size={18} />
+      Întrebați la {site.phone}
+    </a>
+  </div>
+</div>
+
+<script>
+  // Clipul pornește doar când e pe ecran și doar dacă utilizatorul nu a cerut mișcare redusă.
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.querySelectorAll<HTMLVideoElement>('video[data-autoplay]').forEach((v) => {
+    if (reduce) return;
+    new IntersectionObserver(([e]) => (e.isIntersecting ? v.play().catch(() => {}) : v.pause()), {
+      threshold: 0.25,
+    }).observe(v);
+  });
+</script>
