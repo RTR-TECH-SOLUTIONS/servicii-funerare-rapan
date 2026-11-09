@@ -5,6 +5,9 @@ Cerința: site de prezentare „să îmi atrag clienți”, primul pe Google la 
 (serviciifunerarerapan.ro) care a dispărut când n-a mai plătit găzduirea. Research în `_research/national/REPORT.md`
 (top site-uri RO) și `_research/local/REPORT.md` (concurența din Pitești/Argeș, site-ul vechi, firma, SEO).
 
+**Live:** https://demo.mrwebsites.ro/servicii-funerare-rapan/ (repo `RTR-TECH-SOLUTIONS/servicii-funerare-rapan`,
+GitHub Pages din workflow, publicat pe 9 nov 2026).
+
 ```
 npm install
 npm run dev      # http://localhost:4321/servicii-funerare-rapan/
