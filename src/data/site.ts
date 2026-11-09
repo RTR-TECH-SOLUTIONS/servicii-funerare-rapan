@@ -96,7 +96,8 @@ export const services: Service[] = [
       'Venim după decedat acasă, la spital sau la morgă și îl ducem acolo unde se face priveghiul, apoi la biserică și la cimitir.',
     ],
     points: ['Gratuit în comuna Bascov', 'Pitești și comunele din jur', 'Transport între localități și din alte orașe, la cerere'],
-    photo: photos.dricBiserica,
+    // dricBiserica e deja în antetul paginii Servicii, aici pun cealaltă poză a mașinii.
+    photo: photos.dricBiserica2,
     extra: photos.duba,
   },
   {
