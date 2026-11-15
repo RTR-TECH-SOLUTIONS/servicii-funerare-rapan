@@ -5,14 +5,15 @@ Cerința: site de prezentare „să îmi atrag clienți”, primul pe Google la 
 (serviciifunerarerapan.ro) care a dispărut când n-a mai plătit găzduirea. Research în `_research/national/REPORT.md`
 (top site-uri RO) și `_research/local/REPORT.md` (concurența din Pitești/Argeș, site-ul vechi, firma, SEO).
 
-**Live:** https://demo.mrwebsites.ro/servicii-funerare-rapan/ (repo `RTR-TECH-SOLUTIONS/servicii-funerare-rapan`,
+**Demo:** https://demo.mrwebsites.ro/servicii-funerare-rapan/ (repo `RTR-TECH-SOLUTIONS/servicii-funerare-rapan`,
 GitHub Pages din workflow, publicat pe 9 nov 2026).
+**Domeniul real:** `serviciifunerarebascov.ro` (găzduirea noastră, Enhance), pașii în `DEPLOY.md`.
 
 ```
 npm install
-npm run dev      # http://localhost:4321/servicii-funerare-rapan/
-npm run build    # dist/ static
-git push         # republică pe https://demo.mrwebsites.ro/servicii-funerare-rapan/ (GitHub Pages din workflow)
+npm run dev      # http://localhost:4321/
+npm run build    # dist/ pentru https://serviciifunerarebascov.ro (în rădăcină)
+git push         # republică demo-ul pe https://demo.mrwebsites.ro/servicii-funerare-rapan/ (noindex)
 ```
 
 ## Versiunea 2 (feedback Mario, 9 nov 2026)
@@ -56,8 +57,8 @@ verdele/movul, poze stock cu apus/grâu, emoji, săgețile.
 
 **Real:** telefonul și WhatsApp-ul, adresa (Valea Ursului nr. 203, din lista DSP Argeș), firma (RĂPAN ELENA Î.F.,
 CUI 47183478, F03/764/2022), dricul AG 11 RPN, nota Google 4,9 din 49, recenziile de pe Facebook, transportul gratuit
-în comună (de pe flyer), serviciile (flyer + Facebook), **pachetele Basic 3.500 / Standard 4.500 / Premium 6.250 lei**
-(de pe site-ul vechi, Wayback 02.2025), ajutorul de deces 2026 (9.192 / 4.596 lei).
+în comună (de pe flyer), serviciile (flyer + Facebook), ajutorul de deces 2026 (9.192 / 4.596 lei). Prețurile de pe
+site-ul vechi (3.500 / 4.500 / 6.250 lei) au fost înlocuite cu cele de mai jos.
 
 **Pachete (de la client, WhatsApp 9 nov 2026):** prețurile 5.000 / 5.500 / 6.000 lei („50 mil, 55 mil, 60 mil”) și
 conținutul pachetului de 5.500 (sicriu 1.600, cruce lemn, articole funerare, 3 capete, 6 prescuri, 10 prosoape medii,
@@ -81,11 +82,16 @@ ordinea lui în `PachetContinut.astro`. „Pachetul se poate modifica în funcț
 - logo: refăcut vectorial după cel de pe Facebook (`src/components/Logo.astro`); de cerut fișierul original.
 
 ## La proiectul real
-- domeniul: serviciifunerarerapan.ro e încă înregistrat la cyber_folks (doar DNS-ul e șters) → recuperăm contul sau
-  domeniu nou + redirect;
-- SEO local: title/H1 cu Bascov + Pitești, pagini pe localitate (satele comunei, Pitești, Bradu, Ștefănești...),
-  pagini pe serviciu (transport funerar, pomeni, ajutor de deces 2026), schema `FuneralHome`, sitemap, scos `noindex`;
+**Făcut (9 nov 2026):** build pe domeniul `serviciifunerarebascov.ro` (demo-ul rămâne pe subfolder, noindex),
+`.htaccess`, `robots.txt`, sitemap, canonical, Open Graph (`public/og-rapan.jpg`), schema `LocalBusiness`
+(schema.org nu are tip pentru firme funerare), pachetul legal (Termeni, Confidențialitate, Cookies, banner informativ),
+harta Google încărcată doar la clic, pagina 404, credit RTR în footer.
+
+**Rămas:**
+- domeniul: `serviciifunerarebascov.ro` se înregistrează din /admin pe numele clientului (PF); `serviciifunerarerapan.ro` (cyber_folks)
+  eventual recuperat + redirect 301;
+- SEO local: research keyworduri confirmat cu Mario, pagini pe localitate (satele comunei, Pitești, Bradu,
+  Ștefănești...), pagini pe serviciu (transport funerar, pomeni, ajutor de deces 2026), `geo` + cod poștal în schema;
 - Google Business Profile: acces, adăugat site-ul, adresa unificată (acum apare doar „Brăileni”), poze, recenzii;
 - NAP identic pe Facebook, TikTok, directoare (inmemorie, recenziifunerare, condoleante);
-- pachetul legal (cookie, Termeni, Confidențialitate) + credit RTR în footer;
 - formularul de pomană poate trimite și pe e-mail (Resend).

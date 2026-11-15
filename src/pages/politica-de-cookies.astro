@@ -1,0 +1,52 @@
+---
+import Legal from '../layouts/Legal.astro';
+import { site, u } from '../data/site';
+---
+
+<Legal
+  title="Politica de cookies"
+  metaTitle="Politica de cookies | Servicii Funerare Răpan"
+  description="Ce stochează site-ul Servicii Funerare Răpan în browserul dumneavoastră: doar alegerea legată de bannerul de informare. Fără cookie-uri de analiză sau de publicitate."
+  crumb="Cookies"
+  updated="9 noiembrie 2026"
+>
+  <p>
+    Site-ul {site.name} nu folosește cookie-uri de analiză, de publicitate sau de urmărire. Nu avem Google Analytics, nu
+    avem pixeli de rețele sociale și nu urmărim ce pagini vizitați.
+  </p>
+
+  <h2>Ce se stochează în browser</h2>
+  <p>
+    Un singur lucru: alegerea dumneavoastră de a închide bannerul de informare. Se salvează local, în browser (în spațiul
+    numit <em>localStorage</em>), sub cheia <strong>rapan-cookie-notice</strong>, ca bannerul să nu mai apară la fiecare
+    pagină. Informația rămâne pe dispozitivul dumneavoastră și nu ajunge la noi.
+  </p>
+
+  <h2>Servicii externe</h2>
+  <p>
+    Fonturile, pozele și clipurile site-ului sunt găzduite pe același server cu site-ul, deci simpla navigare nu trimite
+    date către alți furnizori.
+  </p>
+  <ul>
+    <li>
+      <strong>Harta Google</strong> de pe pagina <a href={u('/contact/')}>Contact</a> se încarcă doar dacă apăsați
+      „Afișați harta”. Din acel moment Google poate seta cookie-uri proprii, conform politicii Google.
+    </li>
+    <li>
+      Butoanele de <strong>WhatsApp</strong> și linkul către pagina de <strong>Facebook</strong> vă duc, la clic, pe
+      platformele Meta. Acolo se aplică politicile lor de cookie-uri.
+    </li>
+  </ul>
+
+  <h2>Cum ștergeți datele stocate</h2>
+  <p>
+    Puteți șterge oricând stocarea locală din setările browserului, la secțiunea despre datele site-urilor. Bannerul va
+    reapărea la următoarea vizită, iar site-ul va funcționa normal.
+  </p>
+
+  <h2>Întrebări</h2>
+  <p>
+    Ne puteți suna la <a href={site.phoneHref}>{site.phone}</a>. Vedeți și{' '}
+    <a href={u('/politica-de-confidentialitate/')}>politica de confidențialitate</a>.
+  </p>
+</Legal>

@@ -1,0 +1,73 @@
+---
+import Legal from '../layouts/Legal.astro';
+import { site, u } from '../data/site';
+---
+
+<Legal
+  title="Termeni și condiții"
+  metaTitle="Termeni și condiții | Servicii Funerare Răpan"
+  description="Condițiile în care puteți folosi site-ul Servicii Funerare Răpan și în care se comandă serviciile funerare și pomenile în Bascov, Pitești și împrejurimi."
+  crumb="Termeni"
+  updated="9 noiembrie 2026"
+>
+  <p>
+    Site-ul {site.name} este administrat de <strong>{site.legal.name}</strong>, CUI {site.legal.cui}, Reg. Com.{' '}
+    {site.legal.reg}, cu punctul de lucru în {site.address}. Folosind site-ul, sunteți de acord cu cele de mai jos.
+  </p>
+
+  <h2>Ce găsiți pe site</h2>
+  <p>
+    Site-ul prezintă serviciile funerare pe care le oferim în comuna Bascov, în Pitești și în localitățile din jur:
+    transport funerar, sicrie și articole funerare, pregătirea decedatului, capelă, pomeni și parastase. Suntem prestator
+    de servicii funerare autorizat de DSP Argeș.
+  </p>
+
+  <h2>Prețuri și pachete</h2>
+  <p>
+    Prețurile de pe site sunt informative și includ ce este scris la fiecare pachet. Pachetul se poate modifica în funcție
+    de sicriul ales și de serviciile adăugate. Prețul final se stabilește împreună cu dumneavoastră, înainte de începerea
+    serviciilor, și nu se schimbă pe parcurs fără acordul dumneavoastră.
+  </p>
+  <p>
+    Valoarea ajutorului de deces afișată pe site este cea stabilită de lege pentru anul în curs și se plătește de Casa de
+    Pensii, nu de noi. Calculul „cât vă rămâne” este orientativ.
+  </p>
+
+  <h2>Cum se face o comandă</h2>
+  <p>
+    Serviciile se comandă la telefon, pe WhatsApp sau la sediu, non-stop. Un mesaj trimis din formularul de pomeni nu este,
+    prin el însuși, o comandă confirmată: comanda se consideră stabilită după ce vă sunăm și confirmăm meniul, data și
+    numărul de porții.
+  </p>
+
+  <h2>Proprietate intelectuală</h2>
+  <p>
+    Textele, fotografiile, sigla și structura site-ului aparțin {site.legal.name}, respectiv autorilor lor, și nu pot fi
+    preluate fără acord scris.
+  </p>
+
+  <h2>Limitarea răspunderii</h2>
+  <p>
+    Ne străduim ca informațiile de pe site să fie corecte și actuale. Actele și sumele stabilite de autorități se pot
+    schimba, așa că vă confirmăm la telefon ce e valabil în momentul respectiv.
+  </p>
+
+  <h2>Reclamații</h2>
+  <p>
+    Pentru orice nemulțumire ne puteți suna la <a href={site.phoneHref}>{site.phone}</a>. Ca și consumator, vă puteți
+    adresa și Autorității Naționale pentru Protecția Consumatorilor (<a href="https://anpc.ro" target="_blank" rel="noopener">anpc.ro</a>),
+    inclusiv pentru soluționarea alternativă a litigiilor (SAL).
+  </p>
+
+  <h2>Datele personale</h2>
+  <p>
+    Modul în care prelucrăm datele este descris în <a href={u('/politica-de-confidentialitate/')}>politica de
+    confidențialitate</a>, iar ce se stochează în browser, în <a href={u('/politica-de-cookies/')}>politica de cookies</a>.
+  </p>
+
+  <h2>Legea aplicabilă</h2>
+  <p>
+    Acestor termeni li se aplică legea română. Neînțelegerile se rezolvă pe cale amiabilă, iar dacă nu este posibil, de
+    instanțele competente.
+  </p>
+</Legal>

@@ -1,0 +1,89 @@
+---
+import Legal from '../layouts/Legal.astro';
+import { site, u } from '../data/site';
+---
+
+<Legal
+  title="Politica de confidențialitate"
+  metaTitle="Politica de confidențialitate | Servicii Funerare Răpan"
+  description="Cum prelucrează Servicii Funerare Răpan datele familiilor care ne contactează: ce date primim, pe ce temei, cui le transmitem și ce drepturi aveți conform GDPR."
+  crumb="Confidențialitate"
+  updated="9 noiembrie 2026"
+>
+  <p>
+    Documentul explică modul în care {site.legal.name} prelucrează datele cu caracter personal ale persoanelor care
+    ne contactează sau pentru care organizăm o înmormântare, o pomană ori un parastas.
+  </p>
+
+  <h2>Cine prelucrează datele</h2>
+  <p>
+    Operatorul datelor este <strong>{site.legal.name}</strong>, CUI {site.legal.cui}, Reg. Com. {site.legal.reg}, cu
+    punctul de lucru în {site.address}.
+  </p>
+  <ul>
+    <li>Telefon și WhatsApp: <a href={site.phoneHref}>{site.phone}</a>, non-stop</li>
+    <li>Adresă: {site.address}</li>
+  </ul>
+
+  <h2>Ce date prelucrăm și de unde le avem</h2>
+  <p>
+    Site-ul nu colectează date de la vizitatori. Nu are formulare care trimit informații către un server, nu folosește
+    instrumente de analiză a traficului și nu construiește profiluri. Formularul de comandă pentru pomeni doar pregătește,
+    în browserul dumneavoastră, un mesaj pe care îl trimiteți, dacă doriți, din contul dumneavoastră de WhatsApp.
+  </p>
+  <p>Prelucrăm doar datele pe care ni le dați direct, la telefon, pe WhatsApp sau la sediu:</p>
+  <ul>
+    <li>numele și telefonul persoanei care se ocupă de înmormântare, adresa unde trebuie să venim;</li>
+    <li>datele din actele necesare pentru certificatul de deces și pentru dosarul ajutorului de deces (buletine, certificate de stare civilă, cuponul de pensie);</li>
+    <li>detaliile comenzii: serviciile alese, data și locul slujbei, numărul de porții pentru pomană.</li>
+  </ul>
+
+  <h2>În ce scop și pe ce temei</h2>
+  <ul>
+    <li>
+      <strong>Pentru a organiza serviciile cerute</strong> (transport, pregătire, capelă, înmormântare, pomeni): temeiul
+      este contractul încheiat cu dumneavoastră și demersurile făcute la cererea dumneavoastră înainte de acesta (art. 6
+      alin. 1 lit. b din Regulamentul general privind protecția datelor).
+    </li>
+    <li>
+      <strong>Pentru acte și obligațiile legale</strong>: actele de stare civilă, evidențele cerute prestatorilor de servicii
+      funerare și cele contabile (art. 6 alin. 1 lit. c).
+    </li>
+  </ul>
+
+  <h2>Cui transmitem datele</h2>
+  <ul>
+    <li>Serviciului de Stare Civilă și, la cererea dumneavoastră, Casei Teritoriale de Pensii, pentru certificatul de deces și ajutorul de deces;</li>
+    <li>parohiei și administrației cimitirului, doar cât e nevoie pentru slujbă și înmormântare;</li>
+    <li>
+      furnizorului de găzduire a site-ului și, dacă ne scrieți pe WhatsApp sau pe Facebook, Meta Platforms Ireland Ltd.,
+      ca furnizor al acelor servicii. Conversația se supune și politicilor Meta.
+    </li>
+  </ul>
+  <p>Nu vindem date și nu le folosim în scopuri de marketing.</p>
+
+  <h2>Cât timp le păstrăm</h2>
+  <p>
+    Documentele contabile se păstrează cât prevede legea. Copiile actelor primite pentru dosare le păstrăm doar cât e
+    nevoie ca dosarul să fie depus. Mesajele primite pe telefon sau pe WhatsApp, dacă nu se ajunge la o comandă, le ștergem când
+    nu mai sunt necesare.
+  </p>
+
+  <h2>Ce drepturi aveți</h2>
+  <p>
+    Aveți dreptul de acces la date, de rectificare, de ștergere, de restricționare a prelucrării, de opoziție și de
+    portabilitate, în condițiile Regulamentului. Le puteți exercita sunând sau scriindu-ne pe WhatsApp la{' '}
+    <a href={site.phoneHref}>{site.phone}</a> ori prin poștă, la adresa de mai sus. Vă răspundem în cel mult o lună.
+  </p>
+  <p>
+    Dacă apreciați că v-am încălcat drepturile, puteți depune o plângere la Autoritatea Națională de Supraveghere a
+    Prelucrării Datelor cu Caracter Personal, B-dul General Gheorghe Magheru nr. 28-30, București, sau pe{' '}
+    <a href="https://www.dataprotection.ro" target="_blank" rel="noopener">dataprotection.ro</a>.
+  </p>
+
+  <h2>Modificări</h2>
+  <p>
+    Dacă modificăm acest document, publicăm aici versiunea nouă, cu data actualizării. Vedeți și{' '}
+    <a href={u('/politica-de-cookies/')}>politica de cookies</a> și <a href={u('/termeni-si-conditii/')}>termenii și condițiile</a>.
+  </p>
+</Legal>

@@ -2,15 +2,57 @@
 import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import { u, type PageKey } from '../data/site';
+import CookieNotice from '../components/CookieNotice.astro';
+import { site, u, zones, type PageKey } from '../data/site';
 
 interface Props {
   title: string;
   description: string;
-  active: PageKey;
+  active?: PageKey;
+  /** Paginile legale nu aduc trafic: nu se indexează. */
+  noindex?: boolean;
 }
 
-const { title, description, active } = Astro.props;
+const { title, description, active, noindex = false } = Astro.props;
+
+// Demo-ul de pe GitHub Pages (servit dintr-un subfolder) nu se indexează niciodată,
+// ca să nu concureze pe Google cu domeniul real.
+const isDemo = import.meta.env.BASE_URL !== '/';
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const home = new URL(u('/'), Astro.site).href;
+const ogImage = new URL(u('/og-rapan.jpg'), Astro.site).href;
+
+// Date structurate pentru căutările locale. Schema.org nu are un tip dedicat firmelor funerare, deci LocalBusiness.
+// TODO(real): geo (coordonatele exacte din Google Business Profile) și codul poștal, când le confirmă clientul.
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'LocalBusiness',
+  '@id': `${home}#firma`,
+  name: site.name,
+  alternateName: ['Casa funerară Răpan', 'Pompe Funebre Răpan'],
+  legalName: site.legal.name,
+  taxID: site.legal.cui,
+  url: home,
+  telephone: site.phoneHref.replace('tel:', ''),
+  image: ogImage,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: 'Valea Ursului nr. 203',
+    addressLocality: 'Valea Ursului, com. Bascov',
+    addressRegion: 'Argeș',
+    addressCountry: 'RO',
+  },
+  openingHoursSpecification: {
+    '@type': 'OpeningHoursSpecification',
+    dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+    opens: '00:00',
+    closes: '23:59',
+  },
+  areaServed: [...new Set(['Bascov', 'Pitești', ...zones.flatMap((z) => z.places)])]
+    .filter((p) => /^[A-ZĂÂÎȘȚ]/.test(p) && !/^(Toate|Spitalul)/.test(p))
+    .map((name) => ({ '@type': 'Place', name })),
+  sameAs: [site.facebook],
+};
 ---
 
 <!doctype html>
@@ -20,10 +62,23 @@ const { title, description, active } = Astro.props;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
     <meta name="theme-color" content="#14110e" />
-    <!-- demo de prezentare: nu se indexează. TODO(real): se scoate la proiectul real + schema FuneralHome, sitemap. -->
-    <meta name="robots" content="noindex, nofollow" />
+    {(isDemo || noindex) && <meta name="robots" content="noindex, nofollow" />}
+    <link rel="canonical" href={canonical} />
     <link rel="icon" href={u('/favicon.svg')} type="image/svg+xml" />
+    <link rel="apple-touch-icon" href={u('/apple-touch-icon.png')} />
+    <link rel="sitemap" href={u('/sitemap-index.xml')} />
     <title>{title}</title>
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="ro_RO" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <script type="application/ld+json" set:html={JSON.stringify(schema)} />
     <script is:inline>document.documentElement.classList.add('js');</script>
   </head>
   <body>
@@ -32,6 +87,7 @@ const { title, description, active } = Astro.props;
       <slot />
     </main>
     <Footer />
+    <CookieNotice />
     <script>
       // Apariție discretă la scroll (dezactivată la prefers-reduced-motion din CSS).
       const io = new IntersectionObserver(

@@ -1,0 +1,45 @@
+---
+import { u } from '../data/site';
+---
+
+<!--
+  Site-ul nu are analytics și nu setează cookie-uri de urmărire; harta Google se încarcă doar la cerere.
+  Bannerul e informativ: singurul lucru stocat este chiar alegerea de aici (localStorage).
+  Pe mobil stă deasupra barei plutitoare Sunați / WhatsApp, ca să nu o acopere.
+-->
+<div
+  id="cookie-notice"
+  class="fixed inset-x-3 bottom-[84px] z-[60] hidden rounded-[24px] bg-ink-900/97 p-5 text-on-dark ring-1 ring-white/12 shadow-[0_20px_50px_-16px_rgb(0_0_0/0.6)] backdrop-blur lg:inset-x-auto lg:right-5 lg:bottom-5 lg:max-w-[430px]"
+  role="region"
+  aria-label="Informare despre cookie-uri"
+>
+  <p class="text-[15px] leading-relaxed">
+    Folosim doar stocare strict necesară. Nu avem instrumente de urmărire și nu colectăm date despre navigarea
+    dumneavoastră.{' '}
+    <a href={u('/politica-de-cookies/')} class="font-semibold text-gold-lt underline underline-offset-4 hover:text-white">Politica de cookies</a>
+  </p>
+  <button id="cookie-accept" type="button" class="btn btn-gold mt-4 w-full sm:w-auto">Am înțeles</button>
+</div>
+
+<script>
+  const KEY = 'rapan-cookie-notice';
+  const notice = document.getElementById('cookie-notice');
+  let seen = false;
+  try {
+    seen = localStorage.getItem(KEY) === '1';
+  } catch {
+    // Stocare blocată (navigare privată): nu insistăm cu bannerul.
+    seen = true;
+  }
+  if (notice && !seen) {
+    notice.classList.remove('hidden');
+    document.getElementById('cookie-accept')?.addEventListener('click', () => {
+      notice.classList.add('hidden');
+      try {
+        localStorage.setItem(KEY, '1');
+      } catch {
+        /* fără stocare, bannerul reapare la următoarea vizită */
+      }
+    });
+  }
+</script>

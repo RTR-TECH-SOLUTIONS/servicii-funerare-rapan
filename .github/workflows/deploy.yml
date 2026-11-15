@@ -1,4 +1,8 @@
-name: Publicare GitHub Pages
+name: Publicare demo pe GitHub Pages
+
+# Site-ul real rulează pe serviciifunerarebascov.ro (Enhance, publicat din GitHub, vezi DEPLOY.md). Workflow-ul ține doar demo-ul
+# de pe https://demo.mrwebsites.ro/servicii-funerare-rapan/: alt site/base și robots.txt care interzice indexarea,
+# ca demo-ul să nu concureze pe Google cu domeniul real (paginile primesc și meta noindex, vezi Layout.astro).
 
 on:
   push:
@@ -24,7 +28,12 @@ jobs:
           node-version: 24
           cache: npm
       - run: npm ci
+      - name: Blochează indexarea demo-ului
+        run: printf 'User-agent: *\nDisallow: /\n' > public/robots.txt
       - run: npm run build
+        env:
+          SITE_URL: https://demo.mrwebsites.ro
+          SITE_BASE: /servicii-funerare-rapan
       - uses: actions/configure-pages@v6
       - uses: actions/upload-pages-artifact@v5
         with:

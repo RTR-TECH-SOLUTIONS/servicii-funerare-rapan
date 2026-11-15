@@ -56,9 +56,19 @@ import Logo from './Logo.astro';
   </div>
   <!-- Pe mobil, sub bara plutitoare Sună / WhatsApp rămâne fundalul negru al footer-ului (nu un gol alb). -->
   <div class="border-t border-white/10 pb-[84px] lg:pb-0">
-    <div class="wrap flex flex-col gap-2 py-5 text-[13px] sm:flex-row sm:justify-between">
-      <p>© {new Date().getFullYear()} {site.legal.name} · CUI {site.legal.cui}</p>
-      <p>Autorizat DSP Argeș · Mașină mortuară {site.legal.hearse}</p>
+    <div class="wrap flex flex-col gap-4 py-5 text-[13px] leading-relaxed lg:flex-row lg:items-end lg:justify-between">
+      <div>
+        <p>© {new Date().getFullYear()} {site.legal.name} · CUI {site.legal.cui}</p>
+        <p>Autorizat DSP Argeș · Mașină mortuară <span class="whitespace-nowrap">{site.legal.hearse}</span></p>
+      </div>
+      <div class="lg:text-right">
+        <ul class="flex flex-wrap gap-x-5 gap-y-1 lg:justify-end">
+          <li><a href={u('/termeni-si-conditii/')} class="hover:text-white">Termeni și condiții</a></li>
+          <li><a href={u('/politica-de-confidentialitate/')} class="hover:text-white">Confidențialitate</a></li>
+          <li><a href={u('/politica-de-cookies/')} class="hover:text-white">Cookies</a></li>
+        </ul>
+        <p class="mt-1"><a href="https://rtrsolutions.ro" target="_blank" rel="noopener" class="hover:text-white">Site realizat de RTR Tech Solutions</a></p>
+      </div>
     </div>
   </div>
 </footer>

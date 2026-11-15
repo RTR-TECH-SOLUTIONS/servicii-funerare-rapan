@@ -1,0 +1,25 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Icon from '../components/Icon.astro';
+import { site, u } from '../data/site';
+---
+
+<Layout title="Pagina nu există | Servicii Funerare Răpan" description="Pagina căutată nu există. Servicii Funerare Răpan, non-stop: 0751 692 692." noindex>
+  <section class="px-3 pt-3">
+    <div class="panel bg-ink-900 text-on-dark">
+      <div class="wrap py-20 lg:py-28">
+        <h1 class="text-white">Pagina nu mai există</h1>
+        <p class="lead mt-5 max-w-[560px]">
+          Linkul e greșit sau pagina a fost mutată. Dacă aveți nevoie de ajutor acum, ne puteți suna la orice oră.
+        </p>
+        <div class="mt-8 flex flex-wrap gap-3">
+          <a href={site.phoneHref} class="btn btn-gold btn-lg max-sm:w-full">
+            <Icon name="phone" size={20} />
+            {site.phone}
+          </a>
+          <a href={u('/')} class="btn btn-ghost-dark btn-lg max-sm:w-full">Înapoi la prima pagină</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>
